@@ -1,0 +1,334 @@
+# Config file to determine how tokens can be received
+
+# Define the amount of tokens received per mob in each world type
+# Amount of tokens must be a non-negative integer
+mobs:
+  # Tokens from passive mobs
+  bat:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  chicken:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  cow:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  mooshroom:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  pig:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  rabbit:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  sheep:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  squid:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  villager:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  babyVillager:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens from neutral mobs
+  enderman:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  spider:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  zombiePigman:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  babyZombiePigman:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens fom hostile mobs
+  caveSpider:
+      overworld: 1
+      nether: 1
+      end: 1
+
+  blaze:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  chickenJockey:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  creeper:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  poweredCreeper: # special case
+    overworld: 1
+    nether: 1
+    end: 1
+
+  guardian:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  elderGuardian:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  endermite:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  ghast:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  magmaCube:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  silverfish:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  skeleton:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  slime:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  spiderJockey:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  witch:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  witherSkeleton:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  zombie:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  babyZombie:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  zombieVillager:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens from tameable mobs
+  donkey:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  horse:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  mule:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  ocelot:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  skeletonHorse: # not actually in vanilla
+    overworld: 1
+    nether: 1
+    end: 1
+
+  wolf:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens from utility mobs
+  ironGolem:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  snowGolem:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens from boss mobs
+  enderDragon:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  wither:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  # Tokens for unused mobs
+  giant:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  killerBunny:
+    overworld: 1
+    nether: 1
+    end: 1
+
+  zombieHorse:
+    overworld: 1
+    nether: 1
+    end: 1
+
+# Define the amount of tokens received for each type of ore mined. These must be naturally placed blocks.
+# Only blocks listed here will receive tokens for mining. An empty list here will mean no tokens will be received for
+# minig any block. Each material listed here has it's own token award amount. This must be a list even if there is only
+# one ore being defined.
+ores:
+  -
+    # The id for this item. This must be an integer. This example is a redstone ore block
+    itemId: 73
+
+    # The data/damage value of the block. Should be left at 0 when irrelevant
+    itemData: 0
+
+    # The amount of tokens awarded to a player when they mine a naturally spawned block of this kind. Must be a
+    # non-zero positive integer.
+    tokensAwarded: 1
+
+# Set different lotteries players can enter
+# This is a list of lotteries, even if you are only defining one lottery. You may leave it blank as well.
+lotteries:
+  -
+    # This will be the id which you will connect to with the ENTER_LOTTERY action. Each lottery you list here must have
+    # it's own unique lottery id.
+    lotteryId: somelotteryid
+
+    # This is the starting amount before anyone enters. This should be set moderately high, but be careful to not make it
+    # so high that people buying into the lottery don't make a big enough impact on the total pot. This value must be an
+    # integer greater than 0.
+    startingAmount: 1
+
+    # Set or disable "nice" win-mode. This setting is based on the random chance a player will win any of the
+    # winningOptions. If a player enters the lottery and wins multiple tiers, the player will be given the tier with
+    # the highest payout if this is set to "true". That is, when it's nice, it will give the playe the winning with more
+    # tokens. If it's set to "false", or not set to be nice, it will give the player the lowest tier they win. This can
+    # be a good way to make the higher tiers even more difficult to win.
+    winModeNice: false
+
+    # Here is the list of winning options. It must be a list, even if you are only defining the jackpot. You can define
+    # 3 types of wins here.
+    #   1. Discrete token amount      - DISCRETE
+    #   2. Percentage of current pot  - PERCENTAGE
+    #   3. Jackpot                    - JACKPOT
+    # The discrete token amount is a set number of tokens that will be won. If this amount is higher than the total
+    # number of tokens in the pot (hopefully you never set it that high) then all the tokens will be award to that player
+    # and the pot will be restarted. These should probably be low-payouts with a somewhat decent chance of winning
+    #
+    # The percentage of current pot is the next tier up. Whatever the pot is at the current moment, the given percentage
+    # of it will be awarded if the player wins this tier. This should be for medium to very larege winnings, with
+    # lower and lower chances of winning as the winnings get larger.
+    #
+    # The jackpot is everything in the pot at the current time. When this is won the pot will be reset and the game
+    # will be restarted. There should be a very, very small chance someone will win this level. Exactly how difficult
+    # this and the other tiers are the win will depend on the starting size of the lottery, and the general activity
+    # of the server. More players and more people entering the lottery means you will want lower chances to win. This
+    # will be up to you to figure out for your server.
+    winningOptions:
+      -
+        # This is the type of winning. The available options are the ones listed above, that is: DISCRETE, PERCENTAGE,
+        # and JACKPOT.
+        type: DISCRETE
+
+        # DISCRETE: This needs to be a non-zero positive integer
+        # PERCENTAGE: This needs to be a decimal value between 0 and 1. 0 being 0% and 1 being 100%
+        # JACKPOT: This value is ignored when the type is JACKPOT
+        amount: 1
+
+        # This is the probability someone will win this every time they play. 1 is certain, 0 is never. Can be any
+        # decimal value in between. For example, this 0.05 value is 5% of the time.
+        chances: 0.05
+
+        # When someone wins this tier, announce to the rest of the server. This is an optional feature that can be
+        # disabled.
+        announce:
+          # Set to true or false to enable or disable this feature.
+          enable: true
+
+          # The type of announcement. There are two options for this, CHAT and TITLE
+          type: CHAT
+
+          # When a player wins this tier, this is the message that will be sent. Color codes can be used here.
+          # There are 5 variables you can use here:
+          #   {playername}  - Name of the player
+          #   {winnings}    - Amount the player won
+          #   {tokencount}  - Amount of tokens the player has
+          #   {potafter}    - Pot after the winnings have been removed
+          #   {potbefore}   - Pot before the winnings have been removed
+          text: Congratulations to {playername} for winning {winnings} in the lottery!
+
+          # This is the same as the text field, but  for the subtitle, when type is TITLE. When the type field is CHAT,
+          # this field is ignored. This is optional, even for titles (titles don't have to have a subtitle)
+          subtext: ''
+
+

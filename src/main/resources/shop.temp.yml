@@ -1,0 +1,232 @@
+# This is the config file that sets up the shop and all the components in it
+# For reference:
+# Minecraft item ID's: http://www.minecraftinfo.com/idlist.htm
+# Minecraft color codes: http://minecraft.tools/en/color-code.php
+
+# Defines the starting window
+# All shop interactions start here, even if the player goes directly to a sub window (like the
+# monthly command). While this is the root window, it's abilities extend to any other sub window
+# that may be defined. You can set an arbitrary number of sub windows, the way you do it is define
+# a button that opens the window. There can be an arbitrary number of buttons on each window.
+# Based on the master window settings, the plugin will split the buttons into pages. The order of
+# the buttons will be determined by how they are presented here. This is true for every window,
+# including sub-windows. Any button can do a variety of things, as well as multiple things together.
+# The available actions are explained below.
+#
+# If this window is defined incorrectly, missing buttons, or has any other errros, or it's children
+# have any errors, the plugin will throw an error and will not enable.
+window:
+  # This is the general window title for the main window. Sub-windows (any other window with it's
+  # own buttons that you define) will need to set this as well. This is the *only* setting that sub-
+  # windows will be allowed to set that isn't pre-defined in this main window config. This also
+  # supports color codes. There are four variables you can use in this title, which are as follows:
+  #   {pagenumber} - The current integer page that is being viewed (starts at 1)
+  #   {totalpages} - The total pages that exist for the current view
+  #   {playername} - The player's name
+  # This only changes when the window changes
+  # Default value for this is: '&6 Store &e| &6Page &e{pagenumber} / {totalpages}'
+  # Maximum allowed length of the text, including the color codes, is 32 characters.
+  title: '&6 Store &e| &6Page &4{pagenumber} / {totalpages}'
+
+  # Every window is defined by a list of buttons
+  buttons:
+    -
+      # The title of the button. This is the top line of text when the player mouses over the
+      # button. This can use color codes.
+      title: Example Button
+
+      # Description. There may be multiple lines of description. Enter each line as an entry to
+      # the list. This can use color codes. This can be left blank.
+      # The price of the item will be listed below the description, if set to true.
+      desc:
+        - First line example
+        - Second line example
+
+      # Show the price of the button under the description. You may want to disable this for buttons
+      # that simply open a new window, even if the "price" for the button is 0.
+      showPrice: true
+
+      # Some amount of tokens that is required to purchase this item. Must be an integer Can be 0.
+      price: 1000
+
+      # The item ID, which is the minecraft ID for the item. This is the visual representation of
+      # the button.
+      itemId: 2
+
+      # The "damage" value of the material. This is for differentiating between buttons with the number
+      # after the :
+      # Leave at 0 if irrelevant
+      itemData: 0
+
+      # The permission required to view and interact with this button. This is optional can can be left
+      # blank as it is here. The permission can be any permission you wish, but there are some pre-defined
+      # permissions in this plugin you can use. Of course you'll need to use a permission manager to set
+      # them.
+      permission: ''
+
+      # Every button has a list of actions, even if it only does one thing. Buttons can do an arbitrary
+      # number of things. In this case, the button will do everything possible. This is just as an example
+      # so you know how to use it, you probably don't want to do this many things. One of the things it will
+      # do is open another window. Everything that is a part of the root window is also a part of sub-windows.
+      #
+      # Actions are also failable. For example, if an action gives a player an item and they don't have the room
+      # in their inventory to receive said item, the action will fail. If any action fails, the whole transaction
+      # fails, and no tokens are removed from the player's account.
+      actions:
+        # Every action is defined by the action type. This must be included, and it defines what other
+        # fields are required for the action. The default allowed actions are:
+        #   !GiveItems
+        #   !GiveTokens
+        #   !ApplyEffects
+        #   !EnterLottery
+        #   !RepairItems
+        #   !OpenWindow
+        # Each action is defined by the parser tag assigned to it. It must be the first line of each action.
+        # I will give an exmaple of each of the actions, in order, here:
+        - !GiveItems
+          # The give items action gives the player the items listed here. Even if you are just giving them one
+          # item, it will be a list here. this action is failable if there is no space in the player's inventory
+          # to receive the item.
+          items:
+            -
+              # The item ID, which is the minecraft ID for the item.
+              itemId: 2
+
+              # The "damage" value of the item. This is for differentiating between items with the number after
+              # the : in the item list. For tools this literally sets the damage value, so that should be left
+              # to 0. It should also be left at 0 for any case where the damage value is irrelevant.
+              itemData: 0
+
+              # The number of these items to give. Must be an integer greater than 0.
+              quantity: 1
+
+              # Set the display name of the item. This is like naming an item on the anvil. This field can
+              # be left blank to stick with the standard Minecraft name of the item.
+              displayName: ''
+
+              # Set the lore on the item. This is the lines under the dispaly name. Must be a list even if just
+              # setting one value. Can be left blank.
+              lore:
+                - example lore
+
+              # Enchants on the item. Must be a list even if just setting on enchant value.
+              # Can be left blank
+              enchants:
+                -
+                  # The enchantment type.
+                  # Must be an exact string that matches one of the enum values here:
+                  #   https://hub.spigotmc.org/javadocs/spigot/org/bukkit/enchantments/Enchantment.html
+                  enchantment: DAMAGE_ALL
+
+                  # The level of the enchant
+                  # Must be an integer greater than 0
+                  level: 1
+
+        - !GiveTokens
+          # The give tokens action gives the player a set amount of tokens. This action is not failable.
+
+          # The number of tokens to give to the player
+          amount: 1
+
+        - !ApplyEffects
+          # The apply effects action applys potion effects to the player. This action is not failable. Even if you are
+          # just giving them one affect, this must be a list.
+          effects:
+            # Each effect field has a set of required parameters
+            -
+              # Set how long the effect will last on the player in ticks. Must be an intenger greater than 0
+              duration: 1
+
+              # Set the amplifier of the effect. Must be an integer greater than 0
+              amplifier: 1
+
+              # Set whether the effect is ambient. An ambient effect has more, translucent particles. Must be either
+              # true or false
+              ambient: false
+
+              # Set whether the effect should have particles. Must be either true or false
+              particles: true
+
+              # Set the effect type to be applied
+              # Must be an exact string that matches one of the enum values here:
+              #    https://hub.spigotmc.org/javadocs/spigot/org/bukkit/potion/PotionEffectType.html
+              effect: ABSORPTION
+
+        - !EnterLottery
+          # The enter lottery action enters the player into the lotter. This action is not failable.
+
+          # Define the lottery the player is to enter. There can be an arbitrary number of lotteries running, defined
+          # in the lottery config. This lotteryId *must* match a lotteryId in the lottery config in the tokens config.
+          # This could be useful for different classes of lotteries, from small cheap lotteries, to huge expensive lotteries.
+          lotteryId: someLottery
+
+          # The amount of tokens to add to the lottery whenever someone buys this. It would probably make sense for this
+          # to be equal to the price of the button, but it doesn't have to be. An example of a time when it make sense
+          # for them to be different is if there are other actions the button performs, so only part of the cost goes to
+          # the lottery.
+          buyIn: 100
+
+        - !RepairItems
+          # The repair items action repairs a player's items. It can repair all items in inventory, all items of a
+          # certain type, only items equipped, a certain type of equipped item. This action is failable, as there is a
+          # base entry price for repairing, and an optional price on top of that based on how damaged the items are.
+          # If the player has enough to initially buy the repair, but can't
+          # afford the optinal price, this will fail.
+
+          # Set this to true to only repair items that are currently equipped. When set to false, this applies to all items
+          # in the inventory.
+          onlyEquippedItems: false
+
+          # This is a list of item types to be repaired with this action. This must be a list even when only repairing
+          # one item. This can be left blank to repair any item. This is a list of integers, where the integers are
+          # item ID's.
+          #
+          # For example, this will only repair diamond boots, gold leggings, and fishing rods
+          itemTypes:
+            - 313
+            - 316
+            - 346
+
+          # Repair cose. This is the number of tokens to charge for each percentage of damage to repair. Simply set this
+          # value to 0 if you don't want a cost based on how damaged the item is.
+          cost: 100
+
+        - !OpenWindow
+          # The open window action defines a window to be opened. Every aspect of a normal window that can be seen in
+          # this root window can be applied to a sub-window. This includes the title and button list, where each button
+          # can define multiple actions, and the action of a button in this window can also open a new window, and so on.
+          #
+          # This action is not failable. ONLY ONE OPEN_WINDOW ACTION MAY BE DEFINED FOR ANY GIVEN BUTTON. If more than
+          # one OPEN_WINDOW action is defined for one button, the plugin will throw an error and will not enable. If the
+          # window which is defined here is not a properly defined window, and all children are not also properly defined,
+          # the plugin will throw and error and will not enable, just like the root window.
+          #
+          # This is the window map that everything will extend from. It's identical to the window: map at the root of
+          # this document. This means you also need to provide the !tags just like the root window. I include a small
+          # example.
+          window:
+            title: example
+            buttons:
+              -
+                title: button title
+                desc:
+                  - button example description
+                showPrice: true
+                price: 1000
+                itemId: 2
+                itemData: 0
+                permission: ''
+                actions:
+                  - !GiveItems
+                    items:
+                      -
+                        itemId: 268
+                        itemData: 0
+                        quantity: 2
+                        displayName: Bob
+                        lore:
+                          - cool sword
+                        enchants:
+                          -
+                            enchantment: DAMAGE_ALL
+                            level: 1

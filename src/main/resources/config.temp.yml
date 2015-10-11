@@ -1,0 +1,165 @@
+# MySQL Settings
+mysql:
+  hostname: localhost
+  username: ectotokens
+  password: ''
+  database: ectotokens
+  port: '3306'
+  forceSetup: false
+
+# For colors, use & as the special symbol
+# Color code mappings can be found here: http://minecraft.tools/en/color-code.php
+# Minecraft item ID mappings can be found here: http://www.minecraftinfo.com/idlist.htm
+gui:
+  leftNavButton:
+    # Default item: ender pearl (368)
+    itemId: 368
+    # Default data: 0 (none)
+    # Leave this as 0 if it doesn't apply
+    # This is the "damage" or "data" value of the item
+    # That is the, the number after the :
+    itemData: 0
+    # Default baseTitle: dark purple "Previous Page" (&5Previous Page)
+    title: '&5Previous Page'
+    # Description of the item
+    # This can be several lines, add each line as an entry in the list
+    # Also supports color codes
+    # Default is empty
+    desc:
+      -
+
+  rightNavButton:
+    # Default item: ender pearl (368)
+    itemId: 368
+    # Default data: 0 (none)
+    # Leave this as 0 if it doesn't apply
+    # This is the "damage" or "data" value of the item
+    # That is the, the number after the :
+    itemData: 0
+    # Default baseTitle: dark purple "Next Page" (&5Next Page)
+    title: '&5Next Page'
+    # Description of the item
+    # This can be several lines, add each line as an entry in the list
+    # Also supports color codes
+    # Default is empty
+    desc:
+      -
+
+  backButton:
+    # Default item: command block (137)
+    itemId: 137
+    # Default data: 0 (none)
+    # Leave this as 0 if it doesn't apply
+    # This is the "damage" or "data" value of the item
+    # That is the, the number after the :
+    itemData: 0
+    # Default baseTitle: dark purple "Go Back" (&5Go Back)
+    title: '&5Go Back'
+    # Description of the item
+    # This can be several lines, add each line as an entry in the list
+    # Also supports color codes
+    # Default is empty
+    desc:
+      -
+
+  closeButton:
+    # Default item: barrier (166)
+    itemId: 166
+    # Default data: 0 (none)
+    # Leave this as 0 if it doesn't apply
+    # This is the "damage" or "data" value of the item
+    # That is the, the number after the :
+    itemData: 0
+    # Default baseTitle: dark purple "Go Back" (&5Go Back)
+    title: '&5Close Window'
+    # Description of the item
+    # This can be several lines, add each line as an entry in the list
+    # Also supports color codes
+    # Default is empty
+    desc:
+      -
+
+  # Number of rows in the window. This will be constant for the lifetime of the plugin
+  # The number of pages required for the buttons specified in the config will be determined
+  # by this number. The larger this number, the fewer pages needed. It's recommend to keep
+  # this number reasonable. Default is 4. Max is 6. going higher than 6 will cause graphical
+  # bugs in the client.
+  height: 4
+
+  # This defines the different action bar messages the user will see
+  actionBar:
+    # This will be the general text that's visible while the action bar is open
+    # It has two variables you can use:
+    #   {tokencount} - The amount of tokens the player currently has
+    #   {playername} - The player's name
+    # This changes whenever a transaction occurs and their balance changes
+    # Default value: &e&lToken Balance: {tokencount}
+    staticTokensView: '&e&lToken Balance: {tokencount}'
+
+    # When buying something, the user needs to shift-click, to prevent accidental purchases
+    # This message tells them this when they just do a normal click on an item
+    # Default value:
+    shiftClickMessage: '&d&lShift Click to Buy'
+
+    # When a player attempts to buy an item they can't afford
+    # It has three variables you can use:
+    #   {playername} - The player's name
+    #   {tokencount} - The amount of tokens a player currently has
+    #   {pricevalue} - The price of the item they can't afford
+    #   {tokensneed} - The number of tokens the player needs to buy this item
+    # Default value: &c&lNot Enough Tokens - Need {tokensneed} More
+    notEnoughTokens: '&c&lNot Enough Tokens - Need {tokensneed} More'
+
+    # Whenever someone receives a token a message will appear in their action bar telling them
+    # about it. Define the settings for that here.
+    tokensReceived:
+      # Initial color of the text. This will be the descriptiong of the event. Just give the hex
+      # digit for the color.
+      textColor: c
+      # The separator separates the description from the tokens amount
+      separatorCharacter: '-'
+      # Color of the separator color, again, just give the hex digit.
+      separatorColor: 4
+      # Color of the tokens count, again, give just the hext digit.
+      tokensColor: c
+
+# Configuration for the different commands and what they output to the user
+commands:
+  # There are two help responses, one for the normal player, and one for the admins. You can modify
+  # the help messages here.
+  help:
+    playerHelp: |
+      &a/ectotokens help &7- &fDisplays the help page.
+      &a/ectotokens balance &7- &fCheck your balance.
+      &a/ectotokens balance <playerName> &7- &fCheck another player's current balance.
+      &a/ectotokens top &7- &fDisplays the top 10 players with the most tokens.
+      &a/ectotokens shop &7- &fOpens up the shop.
+      &a/ectotokens redeem <code> &7- &fRedeem a coupon code.
+    adminHelp: |
+      &a/ectotokens admin help &7- &fDisplays the admin help page.
+      &a/ectotokens <add:set:take:reset> <name> <amount> &7- &fManages the Tokens.
+      &a/ectotokens generate <name> <amount> [usages] &7- &fMake coupon codes.
+      &a/ectotokens reload &7- &fReloads all the config files.
+      &a/ectotokens reload config &7- &fReloads the config file.
+      &a/ectotokens reload shop &7- &fReloads the shop file.
+      &a/ectotokens reload tokens &7- &fReloads the tokens file.
+  # When someone runs the balance command, what the output of the command is
+  # This has two variables you can use:
+  #   {playername} - The player's name
+  #   {tokencount} - The amount of tokens the player currently has
+  balance: '&3{playername}&b''&3s balance: &2{tokencount}'
+  # The top command lists the top 10 players based on token counts.
+  top:
+    # This is the first line of the response, before the results are shown
+    # There is one variable you can use here:
+    #   {totaltokens} - Total tokens owned by everyone on the server
+    header: '&6Top Ten Player Token Counts &c| &6 Server Total: &e{totaltokens}'
+    # This is each line of the response. There will be 10 of these lines, numbered
+    # 1 (most) to 10 (10'th most) on the server. There are three variables you can use
+    # here:
+    #   {linenumber} - The line number of the response
+    #   {playername} - The player's name
+    #   {tokencount} - The amount of tokens the player currently has
+    lines:  '&6{linenumber}&c. &6{playername} &c- &6{tokencount}'
+
+

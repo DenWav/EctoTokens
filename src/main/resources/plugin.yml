@@ -1,0 +1,93 @@
+name: ${project.name}
+main: com.demonwav.ectotoken.EctoToken
+version: ${project.version}
+author: ${project.author}
+
+commands:
+  test:
+    description: wat
+  ectotoken:
+    description: Base command for Ecto-Token utilities
+    aliases: [et, ectotokens]
+
+permissions:
+  # <<< >>> <<< >>> <<< >>> <<< >>> <<< >>> <<< >>>
+  ectotokens.*:
+    description: Access to all permissions
+    default: false
+    children:
+      ectotokens.player.*: true
+      ectotokens.admin.*: true
+  # <<< >>> <<< >>> <<< >>> <<< >>> <<< >>> <<< >>>
+  ectotokens.player.*:
+    description: Player-level permissions
+    default: false
+    children:
+      ectotokens.player.help: true
+      ectotokens.player.balance: true
+      ectotokens.player.top: true
+      ectotokens.player.store: true
+      ectotokens.player.redeem: true
+      ectotokens.player.monthly: true
+  ectotokens.admin.*:
+    description: Admin-level permissions
+    default: false
+    children:
+      ectotokens.admin.add: true
+      ectotokens.admin.take: true
+      ectotokens.admin.set: true
+      ectotokens.admin.generate: true
+      ectotokens.admin.reload: true
+      ectotokens.admin.reload.config: true
+      ectotokens.admin.reload.shop: true
+      ectotokens.admin.reload.tokens: true
+  # <<< >>> <<< >>> <<< >>> <<< >>> <<< >>> <<< >>>
+  ectotokens.player.help:
+    description: Help command
+    default: true
+  ectotokens.player.balance:
+    description: Check balance
+    default: true
+  ectotokens.player.balance.others:
+    description: Check other player's balance
+    default: true
+  ectotokens.player.top:
+    description: Check top list
+    default: true
+  ectotokens.player.store:
+    description: View the store
+    default: true
+  ectotokens.player.redeem:
+    description: Redeem coupons
+    default: true
+  ectotokens.player.monthly:
+    description: View monthly deals for donators
+    default: false
+  # <<< >>> <<< >>> <<< >>> <<< >>> <<< >>> <<< >>>
+  ectotokens.admin.help:
+    description: Show help page for admin
+    default: op
+  ectotokens.admin.add:
+    description: Add tokens to a player's account
+    default: op
+  ectotokens.admin.take:
+    description: Take tokens from a player's account
+    default: op
+  ectotokens.admin.set:
+    description: Set a player's token amount
+    default: op
+  ectotokens.admin.generate:
+    description: Generate coupon code
+    default: op
+  ectotokens.admin.reload:
+    description: Reload all configs
+    default: op
+  ectotokens.admin.reload.config:
+    description: Reload the main config
+    default: op
+  ectotokens.admin.reload.shop:
+    description: Reload the shop config
+    default: op
+  ectotokens.admin.reload.tokens:
+    description: Reload the tokens config
+    default: op
