@@ -67,7 +67,6 @@ public class EctoToken extends JavaPlugin {
         new ActionBarManager(this);
         new LotteryManager(this);
 
-        getCommand("test").setExecutor(new test(this));
         getServer().getPluginManager().registerEvents(new EctoInventoryClickEvent(), this);
         getServer().getPluginManager().registerEvents(new KillEvent(this), this);
 
