@@ -83,12 +83,29 @@ public class CouponManager {
     }
 
     public boolean addCouponUse(int playerId, int couponId) {
-        // TODO: check # of uses
-        QCouponUse c = QCouponUse.couponUse;
-        SQLInsertClause clause = DatabaseManager.getInstance().getInsertClause(c);
+        QCoupon c = QCoupon.coupon;
+        QCouponUse u = QCouponUse.couponUse;
+
+        SQLQuery query = DatabaseManager.getInstance().getNewQuery();
+
+        Integer uses = query.from(c).where(c.couponId.eq(couponId)).uniqueResult(c.uses);
+        uses = uses == null ? 0 : uses;
+
+        // There is a defined number of uses for this coupon
+        // So check how many times it's been used so far
+        if (uses != 0) {
+            query = DatabaseManager.getInstance().getNewQuery();
+            long usages = query.from(u).where(u.couponId.eq(couponId)).count();
+            if (usages >= uses) {
+                // The coupon has been used up completely, return false
+                return false;
+            }
+        }
+
+        SQLInsertClause clause = DatabaseManager.getInstance().getInsertClause(u);
 
         try {
-            clause.columns(c.playerId, c.couponId).values(playerId, couponId).execute();
+            clause.columns(u.playerId, u.couponId).values(playerId, couponId).execute();
             return true;
         } catch (QueryException e) {
             return false;
