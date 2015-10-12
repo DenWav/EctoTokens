@@ -2,25 +2,26 @@ package com.demonwav.ectotoken.action;
 
 import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.button.Button;
-import com.demonwav.ectotoken.config.shop.EctoButtonConfig;
+import com.demonwav.ectotoken.button.EctoButton;
+import com.demonwav.ectotoken.config.ActionConfig;
 import com.demonwav.ectotoken.gui.Window;
 
 import org.bukkit.entity.Player;
 
+// TODO: update when extension documentation is available
 /**
- * The basic action that a general button will run. This is simply a composite interface to combine the behavior of
- * two interfaces to create a contract on the implementing class that it:
+ * The basic action that a general button will run. This creates a contract with the implementing class that it:
  * <pre>
- *     1. Has an action it can perform when the button that owns this Action is clicked
- *     2. Can validate the config given to it by the Yaml parser
+ *     1. Has an action it can perform when the Button that owns this Action is clicked
+ *     2. Can optionally check the current state of the player/server to determine if the Action would be successful
  * </pre>
- * This is so arbitrary actions can be defined in the config without the window manager needing to know anything about
- * it. This also allows {@link EctoButtonConfig general buttons} to run arbitrary actions, and to have their list of
- * actions be extendable by other plugins by simply adding it to the config.
+ * This is so arbitrary actions can be defined without the window manager needing to know anything about
+ * it. This also allows {@link EctoButton general buttons} to run arbitrary actions, and to have their list of
+ * actions be extendable by other plugins by simply implementing this interface.
  * <p/>
- * To create your own actions, implement this class in your plugin. Then have the user of this plugin add an action to
- * one of the buttons in their window (or create a new button if desired) and specify an action with a type tag which
- * points to your class.
+ * To create your own actions, implement this class in your plugin. Then implement the {@link ActionConfig} class which
+ * define your Action implementation. Have the user add the ActionConfig to their shop.yml file to enable the action.
+ * More in-depth documentation on how this is done will be created later.
  * <p/>
  * This is the preferred method of extending functionality of the GUI. However, if you need to define the button itself,
  * look {@link Button here}.
@@ -32,13 +33,25 @@ public interface Action {
      * and may access Bukkit API's freely. It may take any action, however long operations should be run asynchronously
      * to avoid lockups.
      *
-     * @param window The EctoGuiWindow that owns the button which runs this action
-     * @param player The player which clicked the button
-     * @param plugin The instance of the EctoToken plugin which is running
-     * @return false if this Action failed, true otherwise
+     * @param window The Window that owns the button which runs this action.
+     * @param player The Player which clicked the button.
+     * @param plugin The instance of the EctoToken plugin which is running.
      */
     void run(Window window, Player player, EctoToken plugin);
 
+    /**
+     * If there is a chance your Action could fail, override this method. The contract of this method is that it must
+     * be read-only. It is simply to check the current state of whatever it needs to modify and return true or false
+     * depending if at this current state the Action can be performed completely. This method is run before the
+     * {@link #run(Window, Player, EctoToken) run()} method, and if any of the Actions return false from this method,
+     * the Action will be canceled. If your action is not failable then there is no need to override this method, as by
+     * default it simply returns true.
+     *
+     * @param window The Window that owns the button which runs this action.
+     * @param player The Player which clicked the button.
+     * @param plugin The instance of the EctoToken plugin which is running.
+     * @return true if the Action will not fail in the current state of whatever this Action is modifying.
+     */
     default boolean checkAction(Window window, Player player, EctoToken plugin) {
         return true;
     }

@@ -64,6 +64,7 @@ public class DatabaseManager {
         try {
             connection = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
         } catch (SQLException e) {
+            e.printStackTrace();
             plugin.getLogger().severe(StringUtil.red(" *** EctoToken was unable to communicate with the database,"));
             plugin.getLogger().severe(StringUtil.red(" *** please check your settings and reload, EctoToken will"));
             plugin.getLogger().severe(StringUtil.red(" *** now be disabled."));

@@ -27,7 +27,7 @@ import com.demonwav.ectotoken.config.shop.actions.RepairItemsActionConfig;
 import com.demonwav.ectotoken.config.tokens.LotteryConfig;
 import com.demonwav.ectotoken.config.tokens.OreConfig;
 import com.demonwav.ectotoken.config.tokens.TokensConfig;
-import com.demonwav.ectotoken.events.EctoInventoryClickEvent;
+import com.demonwav.ectotoken.events.EctoInventoryEvent;
 import com.demonwav.ectotoken.events.KillEvent;
 import com.demonwav.ectotoken.gui.ActionBarManager;
 import com.demonwav.ectotoken.gui.EctoInventoryHolder;
@@ -67,43 +67,50 @@ public class EctoToken extends JavaPlugin {
         new ActionBarManager(this);
         new LotteryManager(this);
 
-        getServer().getPluginManager().registerEvents(new EctoInventoryClickEvent(), this);
+        // Register event listeners
+        getServer().getPluginManager().registerEvents(new EctoInventoryEvent(), this);
         getServer().getPluginManager().registerEvents(new KillEvent(this), this);
 
         // Prepare to load the configs
         registerClasses();
         loadConfigs();
 
-        if (isEnabled()) {
-            new DatabaseManager(this);
-            if (!isEnabled())
-                return;
+        // check if the config loading failed
+        if (!isEnabled())
+            return;
 
-            DatabaseManager.getInstance().setupDatabase();
+        // Connect to the database
+        new DatabaseManager(this);
 
-            // Register base command
-            BaseCommand baseCommand = new BaseCommand(this);
-            getCommand("ectotoken").setExecutor(baseCommand);
+        // check if the database connection failed
+        if (!isEnabled())
+            return;
 
-            baseCommand.registerCommand("help", new HelpCommand(this));
-            BalanceCommand command = new BalanceCommand(this);
-            baseCommand.registerCommand("balance", command);
-            baseCommand.registerCommand("bal", command);
-            baseCommand.registerCommand("top", new TopCommand(this));
-            baseCommand.registerCommand("shop", new ShopCommand(this));
-            baseCommand.registerCommand("redeem", new RedeemCommand(this));
+        DatabaseManager.getInstance().setupDatabase();
 
-            baseCommand.registerCommand("admin", new AdminCommand(this));
-            baseCommand.registerCommand("add", new AddCommand(this));
-            baseCommand.registerCommand("set", new SetCommand(this));
-            baseCommand.registerCommand("take", new TakeCommand(this));
-            baseCommand.registerCommand("reset", new ResetCommand(this));
-            baseCommand.registerCommand("generate", new GenerateCommand(this));
-            baseCommand.registerCommand("reload", new ReloadCommand(this));
+        // Register base command
+        BaseCommand baseCommand = new BaseCommand(this);
+        getCommand("ectotoken").setExecutor(baseCommand);
 
-            // Protect against NoClassDefFoundError in onDisable
-            new EctoInventoryHolder(null);
-        }
+        // register sub commands
+        baseCommand.registerCommand("help", new HelpCommand(this));
+        BalanceCommand command = new BalanceCommand(this);
+        baseCommand.registerCommand("balance", command);
+        baseCommand.registerCommand("bal", command);
+        baseCommand.registerCommand("top", new TopCommand(this));
+        baseCommand.registerCommand("shop", new ShopCommand(this));
+        baseCommand.registerCommand("redeem", new RedeemCommand(this));
+
+        baseCommand.registerCommand("admin", new AdminCommand(this));
+        baseCommand.registerCommand("add", new AddCommand(this));
+        baseCommand.registerCommand("set", new SetCommand(this));
+        baseCommand.registerCommand("take", new TakeCommand(this));
+        baseCommand.registerCommand("reset", new ResetCommand(this));
+        baseCommand.registerCommand("generate", new GenerateCommand(this));
+        baseCommand.registerCommand("reload", new ReloadCommand(this));
+
+        // Protect against NoClassDefFoundError in onDisable
+        new EctoInventoryHolder(null);
     }
 
     private void copy(String in, File dest) {

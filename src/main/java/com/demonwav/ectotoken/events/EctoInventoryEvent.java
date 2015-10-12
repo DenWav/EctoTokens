@@ -1,16 +1,15 @@
 package com.demonwav.ectotoken.events;
 
 import com.demonwav.ectotoken.gui.EctoInventoryHolder;
-import com.demonwav.ectotoken.gui.EctoWindow;
+import com.demonwav.ectotoken.gui.Window;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
-public class EctoInventoryClickEvent implements Listener {
+public class EctoInventoryEvent implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onClickEvent(InventoryClickEvent event) {
@@ -24,11 +23,8 @@ public class EctoInventoryClickEvent implements Listener {
         if (event.getRawSlot() < 0)
             return;
 
-        // But we only want to process left clicks
-        if (event.getClick() == ClickType.LEFT || event.getClick() == ClickType.SHIFT_LEFT) {
-            EctoWindow window = ((EctoInventoryHolder) event.getInventory().getHolder()).getWindow();
-            window.click(event.getRawSlot(), event.getClick());
-        }
+        Window window = ((EctoInventoryHolder) event.getInventory().getHolder()).getWindow();
+        window.click(event.getRawSlot(), event.getClick());
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
@@ -36,5 +32,4 @@ public class EctoInventoryClickEvent implements Listener {
         if (event.getInventory().getHolder() instanceof EctoInventoryHolder)
             ((EctoInventoryHolder) event.getInventory().getHolder()).getWindow().close();
     }
-
 }

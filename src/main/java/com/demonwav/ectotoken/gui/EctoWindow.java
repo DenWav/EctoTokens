@@ -60,6 +60,11 @@ public class EctoWindow implements Window {
     }
 
     @Override
+    public Player getPlayer() {
+        return player;
+    }
+
+    @Override
     public void createWindow() {
         inv = Bukkit.createInventory(new EctoInventoryHolder(this), 9 * h, getTitle());
         // current page is 0 at start, always
@@ -185,18 +190,23 @@ public class EctoWindow implements Window {
 
     @Override
     public void click(int slot, ClickType type) {
-        if (slot == 0)
-            plugin.getMainConfig().getGui().getBackButton().getButton().onClick(this, player, plugin);
-        else if (slot == 8)
-            plugin.getMainConfig().getGui().getCloseButton().getButton().onClick(this, player, plugin);
-        else if (slot == leftSlot)
-            plugin.getMainConfig().getGui().getLeftNavButton().getButton().onClick(this, player, plugin);
-        else if (slot == rightSlot)
-            plugin.getMainConfig().getGui().getRightNavButton().getButton().onClick(this, player, plugin);
-        else if (type == ClickType.SHIFT_LEFT)
-            getPage().click(slot, player, this, plugin);
-        else
+        // Only process gui clicks from the left-click
+        if (type == ClickType.LEFT || type == ClickType.SHIFT_LEFT) {
+            if (slot == 0)
+                plugin.getMainConfig().getGui().getBackButton().getButton().onClick(this, player, plugin);
+            else if (slot == 8)
+                plugin.getMainConfig().getGui().getCloseButton().getButton().onClick(this, player, plugin);
+            else if (slot == leftSlot)
+                plugin.getMainConfig().getGui().getLeftNavButton().getButton().onClick(this, player, plugin);
+            else if (slot == rightSlot)
+                plugin.getMainConfig().getGui().getRightNavButton().getButton().onClick(this, player, plugin);
+        } else if (type == ClickType.SHIFT_LEFT) {
+            // only pass the click to the page for non-gui buttons
+            if (slot != 0 && slot != 8 && slot != leftSlot && slot != rightSlot)
+                getPage().click(slot, player, this, plugin);
+        } else {
             ActionBarManager.getInstance().setActionBarMomentarily(player, ChatColor.LIGHT_PURPLE + "Shift Click to Buy", 3);
+        }
     }
 
     @Override

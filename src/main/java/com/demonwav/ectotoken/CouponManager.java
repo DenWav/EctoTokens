@@ -83,6 +83,7 @@ public class CouponManager {
     }
 
     public boolean addCouponUse(int playerId, int couponId) {
+        // TODO: check # of uses
         QCouponUse c = QCouponUse.couponUse;
         SQLInsertClause clause = DatabaseManager.getInstance().getInsertClause(c);
 

@@ -4,10 +4,8 @@ version: ${project.version}
 author: ${project.author}
 
 commands:
-  test:
-    description: wat
   ectotoken:
-    description: Base command for Ecto-Token utilities
+    description: Base command for EctoToken utilities
     aliases: [et, ectotokens]
 
 permissions:
@@ -62,7 +60,7 @@ permissions:
     default: true
   ectotokens.player.monthly:
     description: View monthly deals for donators
-    default: false
+    default: true
   # <<< >>> <<< >>> <<< >>> <<< >>> <<< >>> <<< >>>
   ectotokens.admin.help:
     description: Show help page for admin

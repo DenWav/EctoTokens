@@ -5,9 +5,9 @@ import org.bukkit.inventory.InventoryHolder;
 
 public class EctoInventoryHolder implements InventoryHolder {
 
-    private final EctoWindow window;
+    private final Window window;
 
-    public EctoInventoryHolder(EctoWindow window) {
+    public EctoInventoryHolder(Window window) {
         this.window = window;
     }
 
@@ -16,7 +16,7 @@ public class EctoInventoryHolder implements InventoryHolder {
         return null;
     }
 
-    public EctoWindow getWindow() {
+    public Window getWindow() {
         return window;
     }
 }
