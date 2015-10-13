@@ -40,6 +40,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FileUtils;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -49,6 +50,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 public class EctoToken extends JavaPlugin {
     private final List<ConfigReg> registerList = new LinkedList<>();
@@ -155,14 +157,16 @@ public class EctoToken extends JavaPlugin {
     }
 
     private void setRegisteredClasses(YamlConfig config) {
-        registerList.stream().forEach(configReg -> {
+        for (ConfigReg configReg : registerList) {
             if (configReg.getType() == Register.DEFAULT) {
                 config.setPropertyDefaultType(configReg.getParent(), configReg.getName(), configReg.getChild());
             } else {
                 config.setPropertyElementType(configReg.getParent(), configReg.getName(), configReg.getChild());
             }
-        });
-        tagMap.entrySet().stream().forEach(e -> config.setClassTag(e.getKey(), e.getValue()));
+        }
+        for (Map.Entry<String, Class<?>> entry : tagMap.entrySet()) {
+            config.setClassTag(entry.getKey(), entry.getValue());
+        }
     }
 
     public void loadConfigs() {
@@ -228,10 +232,12 @@ public class EctoToken extends JavaPlugin {
 
     @Override
     final public void onDisable() {
-        getServer().getOnlinePlayers().stream().filter(
-            player -> player.getOpenInventory().getTopInventory().getHolder() instanceof EctoInventoryHolder ||
-            player.getOpenInventory().getBottomInventory().getHolder() instanceof EctoInventoryHolder
-        ).forEach(org.bukkit.entity.Player::closeInventory);
+        for (Player player : getServer().getOnlinePlayers()) {
+            if (player.getOpenInventory().getTopInventory().getHolder() instanceof EctoInventoryHolder ||
+                player.getOpenInventory().getBottomInventory().getHolder() instanceof EctoInventoryHolder) {
+                player.closeInventory();
+            }
+        }
 
         if (DatabaseManager.getInstance() != null)
             DatabaseManager.getInstance().close();

@@ -73,28 +73,40 @@ public class EctoWindow implements Window {
         player.openInventory(inv);
 
         final UUID uuid = player.getUniqueId();
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            final long tokens = TokensManager.getInstance().getBalance(uuid);
-            final String name = player.getName();
-            final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                final long tokens = TokensManager.getInstance().getBalance(uuid);
+                final String name = player.getName();
+                final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
 
-            plugin.getServer().getScheduler().runTask(plugin, () ->
-                ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens))
-            );
+                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens));
+                    }
+                });
+            }
         });
     }
 
     @Override
     public void updateActionBar() {
         final UUID uuid = player.getUniqueId();
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-            final long tokens = TokensManager.getInstance().getBalance(uuid);
-            final String name = player.getName();
-            final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                final long tokens = TokensManager.getInstance().getBalance(uuid);
+                final String name = player.getName();
+                final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
 
-            plugin.getServer().getScheduler().runTask(plugin, () ->
-                    ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens))
-            );
+                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens));
+                    }
+                });
+            }
         });
     }
 

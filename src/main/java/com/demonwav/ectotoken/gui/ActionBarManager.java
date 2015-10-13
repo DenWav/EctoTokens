@@ -9,6 +9,8 @@ import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ActionBarManager {
     @Getter
@@ -19,11 +21,21 @@ public class ActionBarManager {
 
     public ActionBarManager(EctoToken plugin) {
         instance = this;
-        plugin.getServer().getScheduler().runTaskTimer(plugin, () -> {
-            // Remove null values
-            messages.entrySet().stream().filter(entry -> entry.getValue() == null).peek(messages.entrySet()::remove);
-            // Send the action bar to the non-null parts
-            messages.entrySet().stream().forEach(entry -> setActionBar(entry.getKey(), entry.getValue()));
+        plugin.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+            @Override
+            public void run() {
+                // Remove null values
+                Iterator<Map.Entry<Player, String>> iterator = messages.entrySet().iterator();
+                while (iterator.hasNext()) {
+                    Map.Entry<Player, String> entry = iterator.next();
+                    if (entry.getValue() == null)
+                        iterator.remove();
+                }
+                // Send the action bar to the non-null parts
+                for (Map.Entry<Player, String> entry : messages.entrySet()) {
+                    setActionBar(entry.getKey(), entry.getValue());
+                }
+            }
         }, 1, 10);
     }
 

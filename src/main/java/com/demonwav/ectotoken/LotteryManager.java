@@ -30,8 +30,11 @@ public class LotteryManager {
         configs.put(config.getLotteryId(), config);
     }
 
-    public boolean enterLottery(Player player, long buyIn, String lotteryId) {
+    public boolean enterLottery(final Player player, long buyIn, String lotteryId) {
         if (configs.containsKey(lotteryId)) {
+            // First add the buyin to the pot
+            modifyCurrentPot(lotteryId, buyIn);
+
             LotteryConfig config = configs.get(lotteryId);
             long highestWin = 0;
             LotteryConfig.WinningOption winningOption = null;
@@ -63,23 +66,31 @@ public class LotteryManager {
             }
             if (winningOption != null) {
                 // The player won something
-                long amount = getAmountFromOption(winningOption, lotteryId);
+                final long amount = getAmountFromOption(winningOption, lotteryId);
+
                 announce(winningOption, amount, player, lotteryId);
                 modifyCurrentPot(lotteryId, -1 * amount);
+
                 long current = getCurrentPot(lotteryId);
                 if (current < config.getStartingAmount()) {
                     setCurrentPot(lotteryId, config.getStartingAmount());
                 }
-                plugin.getServer().getScheduler().runTask(plugin, () ->
-                    player.sendMessage(ChatColor.BLUE + "Congratulations! You won " + ChatColor.AQUA +
-                        StringUtil.formatTokens(amount) + ChatColor.BLUE + " tokens!")
-                );
+                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        player.sendMessage(ChatColor.BLUE + "Congratulations! You won " + ChatColor.AQUA +
+                            StringUtil.formatTokens(amount) + ChatColor.BLUE + " tokens!");
+                    }
+                });
                 TokensManager.getInstance().modifyBalance(player, amount, "LOTTERY_WIN");
             } else {
                 // Player didn't win anything
-                plugin.getServer().getScheduler().runTask(plugin, () ->
-                    player.sendMessage(ChatColor.LIGHT_PURPLE + "I'm sorry, you didn't win anything.")
-                );
+                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        player.sendMessage(ChatColor.LIGHT_PURPLE + "I'm sorry, you didn't win anything.");
+                    }
+                });
             }
         } else {
             return false;
@@ -105,7 +116,7 @@ public class LotteryManager {
         return amount;
     }
 
-    private void announce(LotteryConfig.WinningOption option, long winnings, Player player, String lotteryId) {
+    private void announce(LotteryConfig.WinningOption option, final long winnings, final Player player, String lotteryId) {
         LotteryConfig.WinningOption.Announce announce = option.getAnnounce();
         if (announce.getEnable()) {
             final String name = player.getDisplayName();
@@ -115,16 +126,24 @@ public class LotteryManager {
             final String subText = announce.getSubtext();
             switch (announce.getType()) {
                 case "CHAT":
-                    plugin.getServer().getScheduler().runTask(plugin, () ->
-                        plugin.getServer().broadcastMessage(StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter))
-                    );
+                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            plugin.getServer().broadcastMessage(StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter));
+                        }
+                    });
                     break;
                 case "TITLE":
                     final String title = StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter);
                     final String subTitle = StringUtil.lotteryWinTextVar(subText, name, amount, winnings, potAfter);
-                    plugin.getServer().getScheduler().runTask(plugin, () ->
-                        plugin.getServer().getOnlinePlayers().stream().forEach(each -> each.sendTitle(title, subTitle))
-                    );
+                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            for (Player loopPlayer : plugin.getServer().getOnlinePlayers()) {
+                                loopPlayer.sendTitle(title, subTitle);
+                            }
+                        }
+                    });
                     break;
                 default:
                     break;

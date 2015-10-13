@@ -3,6 +3,7 @@ package com.demonwav.ectotoken.config.shop.actions;
 import com.demonwav.ectotoken.action.GiveItemsAction;
 import com.demonwav.ectotoken.config.ActionConfig;
 import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.util.StringUtil;
 
 import lombok.Data;
@@ -10,7 +11,6 @@ import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Data
 public class GiveItemsActionConfig implements ActionConfig {
@@ -20,11 +20,11 @@ public class GiveItemsActionConfig implements ActionConfig {
 
     @Override
     public boolean validate(Logger logger) {
-        items = Config.removeNulls(items);
+        Configs.removeNulls(items);
         if (items == null || items.isEmpty()) {
             logger.warning("Give Item action defined with no items.");
         }
-        return items == null || Config.validate(logger, items);
+        return items == null || Configs.validate(logger, items);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class GiveItemsActionConfig implements ActionConfig {
         public boolean validate(Logger logger) {
             boolean result = true;
 
-            lore = Config.removeNulls(lore);
-            enchants = Config.removeNulls(enchants);
+            Configs.removeNulls(lore);
+            Configs.removeNulls(enchants);
 
             displayName = StringUtil.color(displayName);
-            lore = lore.stream().filter(s -> !s.trim().isEmpty()).map(StringUtil::color).collect(Collectors.toList());
+            Configs.removeEmptiesAndColor(lore);
 
             if (quantity < 1) {
                 logger.severe("Quantity for give items must be 1 or more!");
@@ -58,7 +58,7 @@ public class GiveItemsActionConfig implements ActionConfig {
             }
             if (enchants != null) {
                 System.out.println(enchants.toString());
-                result &= Config.validate(logger, enchants);
+                result &= Configs.validate(logger, enchants);
             }
 
             return result;

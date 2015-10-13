@@ -7,11 +7,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class BaseCommand implements CommandExecutor, TabCompleter {
 
@@ -58,9 +58,13 @@ public class BaseCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) {
-            List<String> result = subCommands.entrySet().stream().filter(entry ->
-                entry.getValue().hasPermission(sender, null) && entry.getKey().toLowerCase().startsWith(args[0])
-            ).map(Map.Entry::getKey).collect(Collectors.toList());
+            List<String> result = new ArrayList<>();
+            for (Map.Entry<String, EctoCommand> entry : subCommands.entrySet()) {
+                if (entry.getValue().hasPermission(sender, null) &&
+                        entry.getKey().toLowerCase().startsWith(args[0].toLowerCase())) {
+                    result.add(entry.getKey());
+                }
+            }
             result.sort(String.CASE_INSENSITIVE_ORDER);
             return result;
         } else {

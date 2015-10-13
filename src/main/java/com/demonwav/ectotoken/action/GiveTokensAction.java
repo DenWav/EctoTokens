@@ -7,7 +7,7 @@ import com.demonwav.ectotoken.gui.Window;
 
 import org.bukkit.entity.Player;
 
-public class GiveTokensAction implements Action {
+public class GiveTokensAction extends Action {
 
     private final GiveTokensActionConfig config;
 

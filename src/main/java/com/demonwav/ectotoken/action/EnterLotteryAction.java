@@ -7,7 +7,7 @@ import com.demonwav.ectotoken.gui.Window;
 
 import org.bukkit.entity.Player;
 
-public class EnterLotteryAction implements Action {
+public class EnterLotteryAction extends Action {
 
     private final EnterLotteryActionConfig config;
 
@@ -16,10 +16,18 @@ public class EnterLotteryAction implements Action {
     }
 
     @Override
-    public void run(Window window, Player player, EctoToken plugin) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () ->
-            LotteryManager.getInstance().enterLottery(player, config.getBuyIn(), config.getLotteryId())
-        );
-        plugin.getServer().getScheduler().runTaskLater(plugin, window::updateActionBar, 10);
+    public void run(final Window window, final Player player, final EctoToken plugin) {
+        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            @Override
+            public void run() {
+                LotteryManager.getInstance().enterLottery(player, config.getBuyIn(), config.getLotteryId());
+            }
+        });
+        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+            @Override
+            public void run() {
+                window.updateActionBar();
+            }
+        }, 10);
     }
 }

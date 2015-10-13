@@ -2,7 +2,7 @@ package com.demonwav.ectotoken.config.shop.actions;
 
 import com.demonwav.ectotoken.action.RepairItemsAction;
 import com.demonwav.ectotoken.config.ActionConfig;
-import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 
 import lombok.Data;
 
@@ -23,7 +23,7 @@ public class RepairItemsActionConfig implements ActionConfig {
         onlyEquippedItems = onlyEquippedItems == null ? false : onlyEquippedItems;
 
         System.out.println(itemTypes.size());
-        itemTypes = Config.removeNulls(itemTypes);
+        Configs.removeNulls(itemTypes);
 
         System.out.println(itemTypes.size());
         if (itemTypes == null)

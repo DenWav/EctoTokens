@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
  * This is the preferred method of extending functionality of the GUI. However, if you need to define the button itself,
  * look {@link Button here}.
  */
-public interface Action {
+public abstract class Action {
 
     /**
      * The action to be run when this item has been clicked. The contract of this method is it is run on the main thread
@@ -37,7 +37,7 @@ public interface Action {
      * @param player The Player which clicked the button.
      * @param plugin The instance of the EctoToken plugin which is running.
      */
-    void run(Window window, Player player, EctoToken plugin);
+    public abstract void run(Window window, Player player, EctoToken plugin);
 
     /**
      * If there is a chance your Action could fail, override this method. The contract of this method is that it must
@@ -52,7 +52,7 @@ public interface Action {
      * @param plugin The instance of the EctoToken plugin which is running.
      * @return true if the Action will not fail in the current state of whatever this Action is modifying.
      */
-    default boolean checkAction(Window window, Player player, EctoToken plugin) {
+    public boolean checkAction(Window window, Player player, EctoToken plugin) {
         return true;
     }
 }

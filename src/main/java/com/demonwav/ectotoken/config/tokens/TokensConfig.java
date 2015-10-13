@@ -1,6 +1,7 @@
 package com.demonwav.ectotoken.config.tokens;
 
 import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 
 import lombok.Data;
 
@@ -18,13 +19,13 @@ public class TokensConfig implements Config {
     public boolean validate(Logger logger) {
         boolean result = mobs.validate(logger);
         if (ores != null) {
-            result &= Config.validate(logger, ores);
+            result &= Configs.validate(logger, ores);
         }
 
-        lotteries = Config.removeNulls(lotteries);
+        Configs.removeNulls(lotteries);
 
         if (lotteries != null) {
-            result &= Config.validate(logger, lotteries);
+            result &= Configs.validate(logger, lotteries);
         }
         return result;
     }

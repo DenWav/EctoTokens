@@ -3,7 +3,7 @@ package com.demonwav.ectotoken.config.shop;
 import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.button.Button;
 import com.demonwav.ectotoken.config.ButtonConfig;
-import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.config.WindowConfig;
 import com.demonwav.ectotoken.gui.EctoWindow;
 import com.demonwav.ectotoken.gui.Window;
@@ -12,9 +12,9 @@ import com.demonwav.ectotoken.util.StringUtil;
 import lombok.Data;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Data
 public class EctoWindowConfig implements WindowConfig {
@@ -34,17 +34,19 @@ public class EctoWindowConfig implements WindowConfig {
             result = false;
         }
 
-        buttons = Config.removeNulls(buttons);
+        Configs.removeNulls(buttons);
 
-        result &= Config.validate(logger, buttons);
+        result &= Configs.validate(logger, buttons);
 
         return result;
     }
 
     @Override
     public Window getWindow(int height, Window parent, Player player, EctoToken plugin) {
-        List<Button> buttonList = buttons.stream().map(ButtonConfig::getButton)
-            .filter(button -> button.hasPermission(player)).collect(Collectors.toList());
+        List<Button> buttonList = new ArrayList<>();
+        for (ButtonConfig button : buttons)
+            if (button.getButton().hasPermission(player))
+                buttonList.add(button.getButton());
         return new EctoWindow(getTitle(), height, buttonList, parent, player, plugin);
     }
 }

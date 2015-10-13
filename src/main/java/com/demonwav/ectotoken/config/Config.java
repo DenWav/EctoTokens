@@ -1,10 +1,7 @@
 package com.demonwav.ectotoken.config;
 
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * This defines a class which is "validatable" in some way. It is to validate classes which represent
@@ -39,46 +36,4 @@ public interface Config extends Serializable {
      * @return true if this class's configuration is valid.
      */
     boolean validate(Logger logger);
-
-    /**
-     * Validate multiple Config objects.
-     *
-     * @param logger The logger to print warning and error messages about these class' configurations to the user.
-     * @param configs The classes to check configuration.
-     * @return true if all supplied objects return true. False if any given objects returns false.
-     */
-    static boolean validate(Logger logger, Config... configs) {
-        boolean result = true;
-        for (Config config : configs) {
-            result &= config.validate(logger);
-        }
-        return result;
-    }
-
-    /**
-     * Validate multiple Config objects.
-     *
-     * @param logger The logger to print warning and error messages about these class' configurations to the user.
-     * @param configs The classes to check configuration.
-     * @return true if all supplied objects return true. False if any given objects returns false.
-     */
-    static boolean validate(Logger logger, Collection<? extends Config> configs) {
-        boolean result = true;
-        for (Config config : configs) {
-            result &= config.validate(logger);
-        }
-        return result;
-    }
-
-    /**
-     * The parser will initialize lists with no entries as a list of length one with a null reference. In the validate()
-     * method use this convenience to remove null values from your lists.
-     *
-     * @param list The list to check for null values.
-     * @param <T> The type encapsulated by the list.
-     * @return A new list with the null values removed.
-     */
-    static <T> List<T> removeNulls(List<T> list) {
-        return list.stream().filter(l -> l != null).collect(Collectors.toList());
-    }
 }

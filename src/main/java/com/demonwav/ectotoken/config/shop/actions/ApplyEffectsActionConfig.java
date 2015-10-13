@@ -3,6 +3,7 @@ package com.demonwav.ectotoken.config.shop.actions;
 import com.demonwav.ectotoken.action.ApplyEffectsAction;
 import com.demonwav.ectotoken.config.ActionConfig;
 import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 
 import lombok.Data;
 import org.bukkit.potion.PotionEffectType;
@@ -17,11 +18,11 @@ public class ApplyEffectsActionConfig implements ActionConfig {
 
     @Override
     public boolean validate(Logger logger) {
-        effects = Config.removeNulls(effects);
+        Configs.removeNulls(effects);
         if (effects == null || effects.isEmpty()) {
             logger.warning("Apply Effects action defined with no effects.");
         }
-        return effects == null || Config.validate(logger, effects);
+        return effects == null || Configs.validate(logger, effects);
     }
 
     @Override

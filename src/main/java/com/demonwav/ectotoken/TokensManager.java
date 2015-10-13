@@ -429,26 +429,26 @@ public class TokensManager {
         QPlayers p = QPlayers.players;
 
         List<Transaction> transactions = new ArrayList<>(tuples.size());
-        tuples.stream().forEach(tuple -> {
+        for (Tuple tuple : tuples) {
             UUID uuid = Util.byteToUUID(tuple.get(p.uuid));
             OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
             Timestamp datetime = tuple.get(t.datetime);
             String description = tuple.get(t.description);
             Long amount = tuple.get(t.amount);
             transactions.add(new Transaction(player, datetime, description, amount == null ? 0 : amount));
-        });
+        }
         return transactions;
     }
 
     private List<Transaction> transformTuple(List<Tuple> tuples, OfflinePlayer player) {
         QTransactions t = QTransactions.transactions;
         List<Transaction> transactions = new ArrayList<>(tuples.size());
-        tuples.stream().forEach(tuple -> {
+        for (Tuple tuple : tuples) {
             Timestamp datetime = tuple.get(t.datetime);
             String description = tuple.get(t.description);
             Long amount = tuple.get(t.amount);
             transactions.add(new Transaction(player, datetime, description, amount == null ? 0 : amount));
-        });
+        }
         return transactions;
     }
 }

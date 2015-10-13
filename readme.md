@@ -13,7 +13,7 @@ Compiling
 
 ### Need Maven? [Get Maven Here](http://maven.apache.org/download.cgi)
 
-#### JDK 8 is required.
+#### JDK 8 is recommended.
 
 First, you need to run [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to create `spigot-1.8.8.jar` and place it
 in the root directory of this project (that's the directory this file is in).

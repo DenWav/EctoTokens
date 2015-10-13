@@ -6,7 +6,7 @@ import com.demonwav.ectotoken.gui.Window;
 
 import org.bukkit.entity.Player;
 
-public class OpenWindowAction implements Action {
+public class OpenWindowAction extends Action {
 
     private final OpenWindowActionConfig config;
 

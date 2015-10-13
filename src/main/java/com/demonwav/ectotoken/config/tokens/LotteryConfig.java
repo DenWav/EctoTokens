@@ -2,6 +2,7 @@ package com.demonwav.ectotoken.config.tokens;
 
 import com.demonwav.ectotoken.LotteryManager;
 import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.util.StringUtil;
 
 import lombok.Data;
@@ -31,14 +32,14 @@ public class LotteryConfig implements Config {
             logger.warning("Lottery defined with starting amount at 0.");
         }
 
-        winningOptions = Config.removeNulls(winningOptions);
+        Configs.removeNulls(winningOptions);
 
         winModeNice = winModeNice == null ? false : winModeNice;
         if (winningOptions == null || winningOptions.isEmpty()) {
             logger.severe("Lottery defined with 0 winning options!");
             result = false;
         } else {
-            result &= Config.validate(logger, winningOptions);
+            result &= Configs.validate(logger, winningOptions);
         }
 
         LotteryManager.getInstance().registerLottery(this);

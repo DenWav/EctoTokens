@@ -34,46 +34,66 @@ public class RedeemCommand implements EctoCommand {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (sender instanceof OfflinePlayer) {
             if (args.length == 0) {
                 sender.sendMessage("Usage: /et redeem <code>");
             } else {
                 final String code = Arrays.stream(args).collect(Collectors.joining(" "));
 
-                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-                    Coupon coupon = CouponManager.getInstance().getCouponByName(code);
-                    if (coupon != null) {
-                        int id = DatabaseManager.getInstance().getPlayerId(((OfflinePlayer) sender).getUniqueId());
-                        if (id == -1) {
-                            plugin.getServer().getScheduler().runTask(plugin, () ->
-                                sender.sendMessage(ChatColor.RED + "Something went wrong while trying to process that command")
-                            );
-                            return;
-                        }
-                        boolean success = CouponManager.getInstance().addCouponUse(id, coupon.getCouponId());
-                        if (success) {
-                            TokensManager.getInstance().modifyBalance(id, coupon.getAmount(), "COUPON - Code:" + coupon.getCouponName());
-                            plugin.getServer().getScheduler().runTask(plugin, () ->
-                                sender.sendMessage(ChatColor.GOLD + "Coupon redeemed, awarded " + ChatColor.YELLOW + StringUtil.formatTokens(coupon.getAmount()) + ChatColor.GOLD + " tokens!")
-                            );
-                        } else {
-                            Timestamp time = CouponManager.getInstance().getWhenCouponUsed(id, coupon.getCouponId());
-                            if (time == null) {
-                                plugin.getServer().getScheduler().runTask(plugin, () ->
-                                    sender.sendMessage(ChatColor.DARK_PURPLE + "That coupon has expired.")
-                                );
-                            } else {
-                                Date date = new Date(time.getTime());
-                                SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy, hh:mm aa zzz");
-                                format.setTimeZone(Calendar.getInstance().getTimeZone());
-                                plugin.getServer().getScheduler().runTask(plugin, () ->
-                                    sender.sendMessage(ChatColor.GOLD + "You used that coupon on " + ChatColor.YELLOW + format.format(date) + ChatColor.GOLD + ".")
-                                );
+                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        final Coupon coupon = CouponManager.getInstance().getCouponByName(code);
+                        if (coupon != null) {
+                            int id = DatabaseManager.getInstance().getPlayerId(((OfflinePlayer) sender).getUniqueId());
+                            if (id == -1) {
+                                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        sender.sendMessage(ChatColor.RED + "Something went wrong while trying to process that command");
+                                    }
+                                });
+                                return;
                             }
+                            boolean success = CouponManager.getInstance().addCouponUse(id, coupon.getCouponId());
+                            if (success) {
+                                TokensManager.getInstance().modifyBalance(id, coupon.getAmount(), "COUPON - Code:" + coupon.getCouponName());
+                                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        sender.sendMessage(ChatColor.GOLD + "Coupon redeemed, awarded " + ChatColor.YELLOW + StringUtil.formatTokens(coupon.getAmount()) + ChatColor.GOLD + " tokens!");
+                                    }
+                                });
+                            } else {
+                                Timestamp time = CouponManager.getInstance().getWhenCouponUsed(id, coupon.getCouponId());
+                                if (time == null) {
+                                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sender.sendMessage(ChatColor.DARK_PURPLE + "That coupon has expired.");
+                                        }
+                                    });
+                                } else {
+                                    final Date date = new Date(time.getTime());
+                                    final SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy, hh:mm aa zzz");
+                                    format.setTimeZone(Calendar.getInstance().getTimeZone());
+                                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sender.sendMessage(ChatColor.GOLD + "You used that coupon on " + ChatColor.YELLOW + format.format(date) + ChatColor.GOLD + ".");
+                                        }
+                                    });
+                                }
+                            }
+                        } else {
+                            plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                @Override
+                                public void run() {
+                                    sender.sendMessage("That coupon doesn't exist.");
+                                }
+                            });
                         }
-                    } else {
-                        plugin.getServer().getScheduler().runTask(plugin, () -> sender.sendMessage("That coupon doesn't exist."));
                     }
                 });
             }

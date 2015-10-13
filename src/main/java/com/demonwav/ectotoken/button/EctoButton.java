@@ -12,7 +12,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
 
-public class EctoButton implements Button {
+public class EctoButton extends Button {
 
     private final ItemStack stack;
     private final List<Action> actions;
@@ -40,22 +40,38 @@ public class EctoButton implements Button {
     }
 
     @Override
-    public void onClick(Window window, Player player, EctoToken plugin) {
+    public void onClick(final Window window, final Player player, final EctoToken plugin) {
         if (cost == 0) {
-            plugin.getServer().getScheduler().runTask(plugin, () ->
-                actions.stream().forEach(a -> a.run(window, player, plugin))
-            );
+            plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    for (Action action : actions) {
+                        action.run(window, player, plugin);
+                    }
+                }
+            });
         } else {
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, () -> {
-                if (TokensManager.getInstance().getBalance(player) >= cost) {
-                    TokensManager.getInstance().modifyBalance(player, -1 * cost, "SHOP_PURCHASE");
-                    plugin.getServer().getScheduler().runTask(plugin, () ->
-                        actions.stream().forEach(a -> a.run(window, player, plugin))
-                    );
-                } else {
-                    plugin.getServer().getScheduler().runTask(plugin, () ->
-                        player.sendMessage(ChatColor.RED + "You don't have enough tokens to purchase that.")
-                    );
+            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    if (TokensManager.getInstance().getBalance(player) >= cost) {
+                        TokensManager.getInstance().modifyBalance(player, -1 * cost, "SHOP_PURCHASE");
+                        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                for (Action action : actions) {
+                                    action.run(window, player, plugin);
+                                }
+                            }
+                        });
+                    } else {
+                        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                            @Override
+                            public void run() {
+                                player.sendMessage(ChatColor.RED + "You don't have enough tokens to purchase that.");
+                            }
+                        });
+                    }
                 }
             });
         }

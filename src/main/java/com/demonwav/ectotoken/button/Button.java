@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
  * in the window section of shop.yml. You will need to add the class tag for the Button, as it won't be the
  * {@link EctoButton} implementation the parser is expecting. More information on how to do this will be added later.
  */
-public interface Button {
+public abstract class Button {
 
     /**
      * The view of the Button. This serves no purpose to the Window except as an icon for the button, and the text the
@@ -26,7 +26,7 @@ public interface Button {
      *
      * @return The ItemStack to use as the icon for this button.
      */
-    ItemStack getItem();
+    public abstract ItemStack getItem();
 
     /**
      * Run when the Button is clicked.
@@ -35,7 +35,7 @@ public interface Button {
      * @param player The Player that clicked the button.
      * @param plugin The EctoToken instance.
      */
-    void onClick(Window window, Player player, EctoToken plugin);
+    public abstract void onClick(Window window, Player player, EctoToken plugin);
 
     /**
      * Returns true if this player has permission to view and interact with this button.
@@ -43,7 +43,7 @@ public interface Button {
      * @param player The player to check the permission for.
      * @return True if the player has permission to view the Button
      */
-    default boolean hasPermission(Player player) {
+    public boolean hasPermission(Player player) {
         return true;
     }
 }

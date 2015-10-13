@@ -9,9 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.stream.IntStream;
-
-public class GiveItemsAction implements Action {
+public class GiveItemsAction extends Action {
 
     private final GiveItemsActionConfig config;
 
@@ -21,7 +19,7 @@ public class GiveItemsAction implements Action {
 
     @Override
     public void run(Window window, Player player, EctoToken plugin) {
-        config.getItems().stream().forEach(item -> {
+        for (GiveItemsActionConfig.Item item : config.getItems()) {
             ItemStack stack = new ItemStack(item.getItemId(), 1, item.getItemData());
             int maxStack = stack.getMaxStackSize();
             int quantity = item.getQuantity();
@@ -44,7 +42,7 @@ public class GiveItemsAction implements Action {
                 player.getInventory().addItem(giveStack);
                 quantity -= tempQuantity;
             } while (quantity > 0);
-        });
+        }
         window.updateActionBar();
     }
 
@@ -56,7 +54,11 @@ public class GiveItemsAction implements Action {
             int stackSize = stack.getMaxStackSize();
             stacks += Math.ceil((float)item.getQuantity() / (float)stackSize);
         }
-        long free = IntStream.range(0, 36).filter(i -> player.getInventory().getItem(i) == null).count();
+        long free = 0;
+        for (int i = 0; i < 36; i++) {
+            if (player.getInventory().getItem(i) == null)
+                free++;
+        }
         return free >= stacks;
     }
 }

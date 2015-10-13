@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class ApplyEffectsAction implements Action {
+public class ApplyEffectsAction extends Action {
 
     private final ApplyEffectsActionConfig config;
 
@@ -18,7 +18,7 @@ public class ApplyEffectsAction implements Action {
 
     @Override
     public void run(Window window, Player player, EctoToken plugin) {
-        config.getEffects().stream().forEach(effect -> {
+        for (ApplyEffectsActionConfig.Effect effect : config.getEffects()) {
             PotionEffectType type = PotionEffectType.getByName(effect.getEffect());
             int duration = 0;
             for (PotionEffect potions : player.getActivePotionEffects()) {
@@ -30,7 +30,7 @@ public class ApplyEffectsAction implements Action {
                 }
             }
             player.addPotionEffect(new PotionEffect(type, effect.getDuration() + duration, effect.getAmplifier(), effect.getAmbient(), effect.getParticles()));
-        });
+        }
         window.updateActionBar();
     }
 }

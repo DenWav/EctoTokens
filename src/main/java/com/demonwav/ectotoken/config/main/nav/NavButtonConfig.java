@@ -1,14 +1,13 @@
 package com.demonwav.ectotoken.config.main.nav;
 
 import com.demonwav.ectotoken.config.ButtonConfig;
-import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.util.StringUtil;
 
 import lombok.Data;
 
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 @Data
 public abstract class NavButtonConfig implements ButtonConfig {
@@ -21,8 +20,8 @@ public abstract class NavButtonConfig implements ButtonConfig {
     @Override
     public boolean validate(Logger logger) {
         title = StringUtil.color(title);
-        desc = Config.removeNulls(desc);
-        desc = desc.stream().filter(s -> !s.trim().isEmpty()).map(StringUtil::color).collect(Collectors.toList());
+
+        Configs.removeEmptiesAndColor(desc);
 
         if (title.trim().isEmpty()) {
             logger.severe("Nav button title must be set!");

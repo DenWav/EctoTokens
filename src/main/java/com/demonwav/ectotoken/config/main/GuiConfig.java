@@ -1,6 +1,7 @@
 package com.demonwav.ectotoken.config.main;
 
 import com.demonwav.ectotoken.config.Config;
+import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.config.main.nav.EctoBackButtonConfig;
 import com.demonwav.ectotoken.config.main.nav.EctoCloseButtonConfig;
 import com.demonwav.ectotoken.config.main.nav.EctoLeftNavButtonConfig;
@@ -22,7 +23,7 @@ public class GuiConfig implements Config {
 
     @Override
     public boolean validate(Logger logger) {
-        boolean result = Config.validate(logger, leftNavButton, rightNavButton, backButton, closeButton);
+        boolean result = Configs.validate(logger, leftNavButton, rightNavButton, backButton, closeButton);
 
         if (height < 1 || height > 6) {
             logger.severe("Height must be greater than 0 and less than 6.");

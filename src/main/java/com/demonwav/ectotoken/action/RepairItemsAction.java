@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class RepairItemsAction implements Action {
+public class RepairItemsAction extends Action {
 
     private final RepairItemsActionConfig config;
 
