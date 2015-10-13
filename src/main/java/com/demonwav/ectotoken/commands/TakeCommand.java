@@ -4,6 +4,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.command.Command;
@@ -44,7 +45,7 @@ public class TakeCommand implements EctoCommand {
 
             final long finalAmount = amount;
             final String senderName = sender.getName();
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            Util.runTaskAsync(new Runnable() {
                 @Override
                 public void run() {
                     TokensManager.getInstance().modifyBalance(name, -1 * finalAmount, senderName + " removed tokens");
@@ -55,7 +56,7 @@ public class TakeCommand implements EctoCommand {
                     }
 
                     final long finalTokens = tokens;
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             sender.sendMessage(StringUtil.formatTokens(finalAmount) + " tokens removed from " + name +

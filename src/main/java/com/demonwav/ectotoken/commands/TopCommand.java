@@ -5,6 +5,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.querydsl.QBalance;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
@@ -29,7 +30,7 @@ public class TopCommand implements EctoCommand {
 
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Util.runTaskAsync(new Runnable() {
             @Override
             public void run() {
                 SQLQuery query = DatabaseManager.getInstance().getNewQuery();
@@ -48,7 +49,7 @@ public class TopCommand implements EctoCommand {
                 total = total == null ? 0 : total;
                 // needed for the lambda
                 final long finalTotal = total;
-                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                Util.runTask(new Runnable() {
                     @Override
                     public void run() {
                         String headerText = plugin.getMainConfig().getCommands().getTop().getHeader();

@@ -3,6 +3,7 @@ package com.demonwav.ectotoken;
 import com.demonwav.ectotoken.config.tokens.LotteryConfig;
 import com.demonwav.ectotoken.querydsl.QLottery;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import com.mysema.query.QueryException;
 import com.mysema.query.sql.SQLQuery;
@@ -75,7 +76,7 @@ public class LotteryManager {
                 if (current < config.getStartingAmount()) {
                     setCurrentPot(lotteryId, config.getStartingAmount());
                 }
-                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                Util.runTask(new Runnable() {
                     @Override
                     public void run() {
                         player.sendMessage(ChatColor.BLUE + "Congratulations! You won " + ChatColor.AQUA +
@@ -85,7 +86,7 @@ public class LotteryManager {
                 TokensManager.getInstance().modifyBalance(player, amount, "LOTTERY_WIN");
             } else {
                 // Player didn't win anything
-                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                Util.runTask(new Runnable() {
                     @Override
                     public void run() {
                         player.sendMessage(ChatColor.LIGHT_PURPLE + "I'm sorry, you didn't win anything.");
@@ -126,7 +127,7 @@ public class LotteryManager {
             final String subText = announce.getSubtext();
             switch (announce.getType()) {
                 case "CHAT":
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             plugin.getServer().broadcastMessage(StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter));
@@ -136,7 +137,7 @@ public class LotteryManager {
                 case "TITLE":
                     final String title = StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter);
                     final String subTitle = StringUtil.lotteryWinTextVar(subText, name, amount, winnings, potAfter);
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             for (Player loopPlayer : plugin.getServer().getOnlinePlayers()) {

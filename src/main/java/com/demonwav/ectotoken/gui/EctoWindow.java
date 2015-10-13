@@ -4,6 +4,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.button.Button;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -73,14 +74,14 @@ public class EctoWindow implements Window {
         player.openInventory(inv);
 
         final UUID uuid = player.getUniqueId();
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Util.runTaskAsync(new Runnable() {
             @Override
             public void run() {
                 final long tokens = TokensManager.getInstance().getBalance(uuid);
                 final String name = player.getName();
                 final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
 
-                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                Util.runTask(new Runnable() {
                     @Override
                     public void run() {
                         ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens));
@@ -93,14 +94,14 @@ public class EctoWindow implements Window {
     @Override
     public void updateActionBar() {
         final UUID uuid = player.getUniqueId();
-        plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+        Util.runTaskAsync(new Runnable() {
             @Override
             public void run() {
                 final long tokens = TokensManager.getInstance().getBalance(uuid);
                 final String name = player.getName();
                 final String text = plugin.getMainConfig().getGui().getActionBar().getStaticTokensView();
 
-                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                Util.runTask(new Runnable() {
                     @Override
                     public void run() {
                         ActionBarManager.getInstance().persistMessage(player, StringUtil.staticTokensViewVar(text, name, tokens));

@@ -4,6 +4,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.action.Action;
 import com.demonwav.ectotoken.gui.Window;
+import com.demonwav.ectotoken.util.Util;
 
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.entity.Player;
@@ -42,7 +43,7 @@ public class EctoButton extends Button {
     @Override
     public void onClick(final Window window, final Player player, final EctoToken plugin) {
         if (cost == 0) {
-            plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+            Util.runTask(new Runnable() {
                 @Override
                 public void run() {
                     for (Action action : actions) {
@@ -51,12 +52,12 @@ public class EctoButton extends Button {
                 }
             });
         } else {
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            Util.runTaskAsync(new Runnable() {
                 @Override
                 public void run() {
                     if (TokensManager.getInstance().getBalance(player) >= cost) {
                         TokensManager.getInstance().modifyBalance(player, -1 * cost, "SHOP_PURCHASE");
-                        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                        Util.runTask(new Runnable() {
                             @Override
                             public void run() {
                                 for (Action action : actions) {
@@ -65,7 +66,7 @@ public class EctoButton extends Button {
                             }
                         });
                     } else {
-                        plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                        Util.runTask(new Runnable() {
                             @Override
                             public void run() {
                                 player.sendMessage(ChatColor.RED + "You don't have enough tokens to purchase that.");

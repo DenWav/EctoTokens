@@ -4,6 +4,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.command.Command;
@@ -43,11 +44,11 @@ public class SetCommand implements EctoCommand {
 
             final long finalAmount = amount;
             final String senderName = sender.getName();
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            Util.runTaskAsync(new Runnable() {
                 @Override
                 public void run() {
                     TokensManager.getInstance().setBalance(name, finalAmount, senderName + " set tokens");
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             sender.sendMessage(name + "'s balance set to " + StringUtil.formatTokens(finalAmount) + " tokens.");

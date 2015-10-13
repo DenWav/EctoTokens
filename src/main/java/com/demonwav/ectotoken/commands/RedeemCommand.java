@@ -7,6 +7,7 @@ import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.querydsl.Coupon;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import lombok.AllArgsConstructor;
 import net.md_5.bungee.api.ChatColor;
@@ -41,14 +42,14 @@ public class RedeemCommand implements EctoCommand {
             } else {
                 final String code = Arrays.stream(args).collect(Collectors.joining(" "));
 
-                plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+                Util.runTaskAsync(new Runnable() {
                     @Override
                     public void run() {
                         final Coupon coupon = CouponManager.getInstance().getCouponByName(code);
                         if (coupon != null) {
                             int id = DatabaseManager.getInstance().getPlayerId(((OfflinePlayer) sender).getUniqueId());
                             if (id == -1) {
-                                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                Util.runTask(new Runnable() {
                                     @Override
                                     public void run() {
                                         sender.sendMessage(ChatColor.RED + "Something went wrong while trying to process that command");
@@ -59,7 +60,7 @@ public class RedeemCommand implements EctoCommand {
                             boolean success = CouponManager.getInstance().addCouponUse(id, coupon.getCouponId());
                             if (success) {
                                 TokensManager.getInstance().modifyBalance(id, coupon.getAmount(), "COUPON - Code:" + coupon.getCouponName());
-                                plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                Util.runTask(new Runnable() {
                                     @Override
                                     public void run() {
                                         sender.sendMessage(ChatColor.GOLD + "Coupon redeemed, awarded " + ChatColor.YELLOW + StringUtil.formatTokens(coupon.getAmount()) + ChatColor.GOLD + " tokens!");
@@ -68,7 +69,7 @@ public class RedeemCommand implements EctoCommand {
                             } else {
                                 Timestamp time = CouponManager.getInstance().getWhenCouponUsed(id, coupon.getCouponId());
                                 if (time == null) {
-                                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                    Util.runTask(new Runnable() {
                                         @Override
                                         public void run() {
                                             sender.sendMessage(ChatColor.DARK_PURPLE + "That coupon has expired.");
@@ -78,7 +79,7 @@ public class RedeemCommand implements EctoCommand {
                                     final Date date = new Date(time.getTime());
                                     final SimpleDateFormat format = new SimpleDateFormat("EEE, dd MMM yyyy, hh:mm aa zzz");
                                     format.setTimeZone(Calendar.getInstance().getTimeZone());
-                                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                                    Util.runTask(new Runnable() {
                                         @Override
                                         public void run() {
                                             sender.sendMessage(ChatColor.GOLD + "You used that coupon on " + ChatColor.YELLOW + format.format(date) + ChatColor.GOLD + ".");
@@ -87,7 +88,7 @@ public class RedeemCommand implements EctoCommand {
                                 }
                             }
                         } else {
-                            plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                            Util.runTask(new Runnable() {
                                 @Override
                                 public void run() {
                                     sender.sendMessage("That coupon doesn't exist.");

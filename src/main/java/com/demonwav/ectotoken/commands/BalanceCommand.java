@@ -4,6 +4,7 @@ import com.demonwav.ectotoken.EctoToken;
 import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.TokensManager;
 import com.demonwav.ectotoken.util.StringUtil;
+import com.demonwav.ectotoken.util.Util;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.OfflinePlayer;
@@ -32,13 +33,13 @@ public class BalanceCommand implements EctoCommand {
     @Override
     public boolean onCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
         if (args.length == 0 && sender instanceof OfflinePlayer) {
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            Util.runTaskAsync(new Runnable() {
                 @Override
                 public void run() {
                     final long amount = TokensManager.getInstance().getBalance(((OfflinePlayer) sender));
                     final String name = sender.getName();
                     final String text = plugin.getMainConfig().getCommands().getBalance();
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             sender.sendMessage(StringUtil.balanceTextVar(text, name, amount));
@@ -47,13 +48,13 @@ public class BalanceCommand implements EctoCommand {
                 }
             });
         } else if (args.length > 0) {
-            plugin.getServer().getScheduler().runTaskAsynchronously(plugin, new Runnable() {
+            Util.runTaskAsync(new Runnable() {
                 @Override
                 public void run() {
                     final String name = args[0];
                     final long amount = TokensManager.getInstance().getBalance(name);
                     final String text = plugin.getMainConfig().getCommands().getBalance();
-                    plugin.getServer().getScheduler().runTask(plugin, new Runnable() {
+                    Util.runTask(new Runnable() {
                         @Override
                         public void run() {
                             sender.sendMessage(StringUtil.balanceTextVar(text, name, amount));
