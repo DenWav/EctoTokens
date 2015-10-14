@@ -15,8 +15,8 @@ Compiling
 
 #### JDK 8 is recommended.
 
-First, you need to run [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to create `spigot-1.8.8.jar` and place it
-in the root directory of this project (that's the directory this file is in).
+First, you need to run [BuildTools](https://www.spigotmc.org/wiki/buildtools/) to create `craftbukkit-1.8.8.jar` and
+place it in the root directory of this project (that's the directory this file is in).
 
 After you have done that, run a working copy of this plugin to create the database this plugin uses, and modify the
 `pom.xml` to connect to your database. If you don't want to do that, the table creation statements are listed in

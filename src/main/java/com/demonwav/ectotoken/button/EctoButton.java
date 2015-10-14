@@ -6,7 +6,7 @@ import com.demonwav.ectotoken.action.Action;
 import com.demonwav.ectotoken.gui.Window;
 import com.demonwav.ectotoken.util.Util;
 
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;

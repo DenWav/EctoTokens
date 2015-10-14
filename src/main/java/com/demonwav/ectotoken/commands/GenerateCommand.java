@@ -6,7 +6,7 @@ import com.demonwav.ectotoken.Perm;
 import com.demonwav.ectotoken.util.StringUtil;
 
 import lombok.AllArgsConstructor;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 

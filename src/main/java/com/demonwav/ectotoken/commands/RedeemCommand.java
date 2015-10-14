@@ -11,7 +11,7 @@ import com.demonwav.ectotoken.util.Util;
 
 import com.google.common.base.Joiner;
 import lombok.AllArgsConstructor;
-import net.md_5.bungee.api.ChatColor;
+import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
