@@ -32,13 +32,10 @@ import com.demonwav.ectotoken.events.KillEvent;
 import com.demonwav.ectotoken.gui.ActionBarManager;
 import com.demonwav.ectotoken.gui.EctoInventoryHolder;
 import com.demonwav.ectotoken.util.StringUtil;
-
 import com.esotericsoftware.yamlbeans.YamlConfig;
 import com.esotericsoftware.yamlbeans.YamlException;
 import com.esotericsoftware.yamlbeans.YamlReader;
-import lombok.Data;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+
 import org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -51,8 +48,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 public class EctoToken extends JavaPlugin {
+
     private final List<ConfigReg> registerList = new LinkedList<>();
     private final HashMap<String, Class<?>> tagMap = new HashMap<>();
 

@@ -4,16 +4,16 @@ import com.demonwav.ectotoken.config.tokens.LotteryConfig;
 import com.demonwav.ectotoken.querydsl.QLottery;
 import com.demonwav.ectotoken.util.StringUtil;
 import com.demonwav.ectotoken.util.Util;
-
 import com.mysema.query.QueryException;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
-import lombok.Getter;
+
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import lombok.Getter;
 
 public class LotteryManager {
     @Getter
@@ -138,6 +138,7 @@ public class LotteryManager {
                     final String title = StringUtil.lotteryWinTextVar(text, name, amount, winnings, potAfter);
                     final String subTitle = StringUtil.lotteryWinTextVar(subText, name, amount, winnings, potAfter);
                     Util.runTask(new Runnable() {
+                        @SuppressWarnings("deprecation")
                         @Override
                         public void run() {
                             for (Player loopPlayer : plugin.getServer().getOnlinePlayers()) {

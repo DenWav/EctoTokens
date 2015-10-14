@@ -3,16 +3,16 @@ package com.demonwav.ectotoken;
 import com.demonwav.ectotoken.querydsl.Coupon;
 import com.demonwav.ectotoken.querydsl.QCoupon;
 import com.demonwav.ectotoken.querydsl.QCouponUse;
-
 import com.mysema.query.QueryException;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.sql.dml.SQLInsertClause;
-import lombok.Getter;
 
 import java.sql.Timestamp;
 import java.util.List;
+import lombok.Getter;
 
+@SuppressWarnings("unused")
 public class CouponManager {
     @Getter
     private static final CouponManager instance = new CouponManager();

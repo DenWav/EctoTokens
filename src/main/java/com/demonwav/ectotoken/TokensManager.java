@@ -4,13 +4,12 @@ import com.demonwav.ectotoken.querydsl.QBalance;
 import com.demonwav.ectotoken.querydsl.QPlayers;
 import com.demonwav.ectotoken.querydsl.QTransactions;
 import com.demonwav.ectotoken.util.Util;
-
 import com.mysema.query.QueryException;
 import com.mysema.query.Tuple;
 import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
-import lombok.Getter;
+
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 
@@ -20,7 +19,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import lombok.Getter;
 
+@SuppressWarnings("unused")
 public class TokensManager {
 
     @Getter
