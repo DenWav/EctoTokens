@@ -9,6 +9,7 @@ import com.demonwav.ectotoken.querydsl.Coupon;
 import com.demonwav.ectotoken.util.StringUtil;
 import com.demonwav.ectotoken.util.Util;
 
+import com.google.common.base.Joiner;
 import lombok.AllArgsConstructor;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -17,12 +18,10 @@ import org.bukkit.command.CommandSender;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 public class RedeemCommand implements EctoCommand {
@@ -40,7 +39,7 @@ public class RedeemCommand implements EctoCommand {
             if (args.length == 0) {
                 sender.sendMessage("Usage: /et redeem <code>");
             } else {
-                final String code = Arrays.stream(args).collect(Collectors.joining(" "));
+                final String code = Joiner.on(" ").join(args);
 
                 Util.runTaskAsync(new Runnable() {
                     @Override

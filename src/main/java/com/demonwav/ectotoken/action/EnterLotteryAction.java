@@ -6,6 +6,7 @@ import com.demonwav.ectotoken.config.shop.actions.EnterLotteryActionConfig;
 import com.demonwav.ectotoken.gui.Window;
 import com.demonwav.ectotoken.util.Util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class EnterLotteryAction extends Action {
@@ -24,7 +25,7 @@ public class EnterLotteryAction extends Action {
                 LotteryManager.getInstance().enterLottery(player, config.getBuyIn(), config.getLotteryId());
             }
         });
-        plugin.getServer().getScheduler().runTaskLater(plugin, new Runnable() {
+        Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
                 window.updateActionBar();
