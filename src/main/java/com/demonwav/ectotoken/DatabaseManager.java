@@ -4,7 +4,6 @@ import com.demonwav.ectotoken.config.main.MySQLConfig;
 import com.demonwav.ectotoken.querydsl.QPlayers;
 import com.demonwav.ectotoken.util.StringUtil;
 import com.demonwav.ectotoken.util.Util;
-
 import com.google.common.collect.Maps;
 import com.mysema.query.sql.MySQLTemplates;
 import com.mysema.query.sql.RelationalPath;
@@ -12,7 +11,7 @@ import com.mysema.query.sql.SQLQuery;
 import com.mysema.query.sql.dml.SQLDeleteClause;
 import com.mysema.query.sql.dml.SQLInsertClause;
 import com.mysema.query.sql.dml.SQLUpdateClause;
-import lombok.Getter;
+
 import org.bukkit.OfflinePlayer;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -31,6 +30,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.UUID;
+import lombok.Getter;
 
 public class DatabaseManager {
     @Getter
@@ -43,9 +43,8 @@ public class DatabaseManager {
     public DatabaseManager(EctoToken plugin) {
         instance = this;
         this.plugin = plugin;
-        MySQLConfig config = plugin.getMainConfig().getMysql();
-        url = "jdbc:mysql://" + config.getHostname() + ":" + config.getPort() + "/" + config.getDatabase() + "?autoReconnect=true";
-        connect(config);
+        getUrl();
+        connect();
     }
 
 
@@ -57,10 +56,11 @@ public class DatabaseManager {
             e.printStackTrace();
         }
         getUrl();
-        connect(plugin.getMainConfig().getMysql());
+        connect();
     }
 
-    private void connect(MySQLConfig config) {
+    private void connect() {
+        MySQLConfig config = plugin.getMainConfig().getMysql();
         try {
             connection = DriverManager.getConnection(url, config.getUsername(), config.getPassword());
         } catch (SQLException e) {
@@ -74,7 +74,7 @@ public class DatabaseManager {
 
     private void getUrl() {
         MySQLConfig config = plugin.getMainConfig().getMysql();
-        url = "jdbc:mysql//" + config.getHostname() + ":" + config.getPort() + "/" + config.getDatabase() + "?autoReconnect=true";
+        url = "jdbc:mysql://" + config.getHostname() + ":" + config.getPort() + "/" + config.getDatabase() + "?autoReconnect=true";
     }
 
     public void setupDatabase() {

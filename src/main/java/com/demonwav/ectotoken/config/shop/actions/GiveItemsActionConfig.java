@@ -6,11 +6,11 @@ import com.demonwav.ectotoken.config.Config;
 import com.demonwav.ectotoken.config.Configs;
 import com.demonwav.ectotoken.util.StringUtil;
 
-import lombok.Data;
 import org.bukkit.enchantments.Enchantment;
 
 import java.util.List;
 import java.util.logging.Logger;
+import lombok.Data;
 
 @Data
 public class GiveItemsActionConfig implements ActionConfig {
@@ -57,7 +57,6 @@ public class GiveItemsActionConfig implements ActionConfig {
                 result = false;
             }
             if (enchants != null) {
-                System.out.println(enchants.toString());
                 result &= Configs.validate(logger, enchants);
             }
 
