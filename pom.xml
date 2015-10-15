@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.demonwav.ectotoken</groupId>
-    <artifactId>ectotoken</artifactId>
+    <groupId>com.demonwav.ectotokens</groupId>
+    <artifactId>ectotokens</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>EctoToken</name>
+    <name>EctoTokens</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -22,6 +22,13 @@
             <url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
         </repository>
     </repositories>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>nexus</id>
+            <url>http://nexus.demonwav.com/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
@@ -79,6 +86,76 @@
                         <configuration>
                             <minimizeJar>true</minimizeJar>
                             <finalName>${project.name}</finalName>
+                            <filters>
+                                <filter>
+                                    <artifact>*:*:*:*</artifact>
+                                    <excludes>
+                                        <exclude>**/**.java</exclude>
+                                        <exclude>AUTHORS</exclude>
+                                        <exclude>LICENSE</exclude>
+                                        <exclude>**.txt</exclude>
+                                        <exclude>OSGI-INF/**</exclude>
+                                        <exclude>META-INF/**</exclude>
+                                        <exclude>lombok/**</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.name}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <finalName>${project.name}</finalName>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.6</version>
+                <executions>
+                    <execution>
+                        <id>delete</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <configuration>
+                            <excludeDefaultDirectories>true</excludeDefaultDirectories>
+                            <filesets>
+                                <fileset>
+                                    <directory>${basedir}/target</directory>
+                                    <includes>
+                                        <include>original*</include>
+                                        <include>ectotokens-*</include>
+                                    </includes>
+                                </fileset>
+                            </filesets>
                         </configuration>
                     </execution>
                 </executions>
@@ -104,7 +181,7 @@
         <!-- Bukkit Server -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>bukkit</artifactId>
+            <artifactId>craftbukkit</artifactId>
             <version>${project.version}</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/craftbukkit-1.8.8.jar</systemPath>
