@@ -207,8 +207,8 @@ public class SomeConfig implements ActionConfig {
 }
 ```
 
-Here we have a List of Integers the user must define. We state that the List needs to have at least item in it in the
-`validate()` method. For this `ActionConfig` our YAML now looks like this:
+Here we have a List of Integers the user must define. We state that the List needs to have at least one item in it in
+the `validate()` method. For this `ActionConfig` our YAML now looks like this:
 
 ```yaml
 actions:
