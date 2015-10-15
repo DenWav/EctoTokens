@@ -85,7 +85,6 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
-                            <finalName>${project.name}</finalName>
                             <filters>
                                 <filter>
                                     <artifact>*:*:*:*</artifact>
@@ -113,9 +112,6 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <finalName>${project.name}</finalName>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -128,9 +124,19 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
-                        <configuration>
-                            <finalName>${project.name}</finalName>
-                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>2.7</version>
+                <executions>
+                    <execution>
+                        <id>attach-executable</id>
+                        <goals>
+                            <goal>deploy-file</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -152,7 +158,6 @@
                                     <directory>${basedir}/target</directory>
                                     <includes>
                                         <include>original*</include>
-                                        <include>ectotokens-*</include>
                                     </includes>
                                 </fileset>
                             </filesets>

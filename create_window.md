@@ -6,7 +6,7 @@ or opened by an action on a button. There are two parts to creating a window: im
 implementing `Window`. First, we will implement `WindowConfig`:
 
 ```java
-import com.demonwav.ectotoken.config.WindowConfig;
+import com.demonwav.ectotokens.config.WindowConfig;
 
 public class SomeConfig implements WindowConfig {
 
@@ -35,7 +35,7 @@ public class SomeConfig implements WindowConfig {
     }
 
     @Override
-    public Window getWindow(int height, Window parent, Player player, EctoToken plugin) {
+    public Window getWindow(int height, Window parent, Player player, EctoTokens plugin) {
         SomePlugin somePlugin = (SomePlugin) Bukkit.getPluginManager().getPlugin("SomePlugin");
         return new SomeWindow(height, parent, player, plugin, windowTitle, somePlugin);
     }
@@ -49,8 +49,8 @@ public class SomePlugin extends JavaPlugin {
 
     @Override
     final public void onEnable() {
-        EctoToken ectoToken = (EctoToken) Bukkit.getPluginManager().getPlugin("EctoToken");
-        ectoToken.registerTag("SomeWindow", SomeConfig.class);
+        EctoTokens ectoTokens = (EctoToken) Bukkit.getPluginManager().getPlugin("EctoTokens");
+        ectoTokens.registerTag("SomeWindow", SomeConfig.class);
     }
 }
 ```
@@ -58,7 +58,7 @@ public class SomePlugin extends JavaPlugin {
 We can actually make this significantly smaller if we simply use the `@Data` annotation from Lombok:
 
 ```java
-import com.demonwav.ectotoken.config.WindowConfig;
+import com.demonwav.ectotokens.config.WindowConfig;
 
 @Data
 public class SomeConfig implements WindowConfig {
@@ -80,7 +80,7 @@ public class SomeConfig implements WindowConfig {
     }
 
     @Override
-    public Window getWindow(int height, Window parent, Player player, EctoToken plugin) {
+    public Window getWindow(int height, Window parent, Player player, EctoTokens plugin) {
         SomePlugin somePlugin = (SomePlugin) Bukkit.getPluginManager().getPlugin("SomePlugin");
         return new SomeWindow(height, parent, player, plugin, windowTitle, somePlugin);
     }
@@ -99,23 +99,23 @@ but here we just pass along the provided values and throw in our plugin too. Her
 We have created an implementation of `Window`, but we need a `Window` if we want the window to actually open:
 
 ```java
-import com.demonwav.ectotoken.gui.EctoInventoryHolder;
-import com.demonwav.ectotoken.gui.Window;
+import com.demonwav.ectotokens.gui.EctoInventoryHolder;
+import com.demonwav.ectotokens.gui.Window;
 
 public class SomeWindow implements Window {
 
     private int height;
     private Window parent;
     private Player player;
-    private EctoToken ectoToken;
+    private EctoTokens ectoTokens;
     private String title;
     private SomePlugin plugin;
 
-    public SomeWindow(int height, Window parent, Player player, EctoToken ectoToken, String title, SomePlugin plugin) {
+    public SomeWindow(int height, Window parent, Player player, EctoTokens ectoTokens, String title, SomePlugin plugin) {
         this.height = height;
         this.parent = parent;
         this.player = player;
-        this.ectoToken = ectoToken;
+        this.ectoTokens = ectoTokens;
         this.title = title;
         this.plugin = plugin;
     }

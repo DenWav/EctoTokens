@@ -57,6 +57,10 @@ public class StringUtil {
                 .replaceAll("\\{tokencount\\}", formatTokens(amount));
     }
 
+    public static String priceTextVar(String s, long price) {
+        return s.replaceAll("\\{price\\}", formatTokens(price));
+    }
+
     public static String color(String s) {
         // lol
         return s.replaceAll("&", "§").replaceAll("§§", "&");

@@ -8,7 +8,7 @@ There are two parts to creating an action: implementing `ActionConfig`, and exte
 `ActionConfig`:
 
 ```java
-import com.demonwav.ectotoken.config.ActionConfig;
+import com.demonwav.ectotokens.config.ActionConfig;
 
 public class SomeConfig implements ActionConfig {
     
@@ -59,8 +59,8 @@ public class SomePlugin extends JavaPlugin {
 
     @Override
     final public void onEnable() {
-        EctoToken ectoToken = (EctoToken) Bukkit.getPluginManager().getPlugin("EctoToken");
-        ectoToken.registerTag("SendPhrase", SomeConfig.class);
+        EctoTokens ectoTokens = (EctoTokens) Bukkit.getPluginManager().getPlugin("EctoTokens");
+        ectoTokens.registerTag("SendPhrase", SomeConfig.class);
     }
 }
 ```
@@ -68,7 +68,7 @@ public class SomePlugin extends JavaPlugin {
 We can actually make this significantly smaller if we simply use the `@Data` annotation from Lombok:
 
 ```java
-import com.demonwav.ectotoken.config.ActionConfig;
+import com.demonwav.ectotokens.config.ActionConfig;
 
 @Data
 public class SomeConfig implements ActionConfig {
@@ -104,7 +104,7 @@ config. We have created an implementation for `ActionConfig`, but we need an `Ac
 something:
 
 ```java
-import com.demonwav.ectotoken.action.Action;
+import com.demonwav.ectotokens.action.Action;
 
 public class SomeAction extends Action {
 
@@ -115,7 +115,7 @@ public class SomeAction extends Action {
     }
 
     @Override
-    public void run(Window window, Player player, EctoToken ectoToken) {
+    public void run(Window window, Player player, EctoTokens ectoTokens) {
         player.sendMessage(ChatColor.getByChar(config.getColor()) + config.getPhrase());
     }
 }

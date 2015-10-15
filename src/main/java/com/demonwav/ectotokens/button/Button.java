@@ -8,7 +8,6 @@ import com.demonwav.ectotokens.gui.Window;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-// TODO: update this when extending documentation is available
 /**
  * This defines some Button that can do something when clicked. For most cases the {@link EctoButton} implementation
  * will probably be powerful enough to suit your needs, as you can define your own {@link Action actions} to be run with
@@ -16,7 +15,8 @@ import org.bukkit.inventory.ItemStack;
  * your action for some reason, then implement this class to create a button which can be used in the {@link Window}.
  * To extend this in your own plugin, implement {@link ButtonConfig} and have the user add teh entry to the button list
  * in the window section of shop.yml. You will need to add the class tag for the Button, as it won't be the
- * {@link EctoButton} implementation the parser is expecting. More information on how to do this will be added later.
+ * {@link EctoButton} implementation the parser is expecting. More information on how to do this can be found
+ * <a href="https://github.com/DemonWav/EctoTokens/blob/master/extending.md">here</a>.
  */
 public abstract class Button {
 

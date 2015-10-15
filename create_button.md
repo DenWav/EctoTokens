@@ -75,7 +75,7 @@ give the Button this instance of the config class, and let the Button decided wh
 config. We have created an implementation of `ButtonConfig`, but we need a `Button` if we want to actually do something:
 
 ```java
-import com.demonwav.ectotoken.button.Button;
+import com.demonwav.ectotokens.button.Button;
 
 public class SomeButton extends Button {
 
@@ -95,7 +95,7 @@ public class SomeButton extends Button {
         }
 
     @Override
-    public void onClick(Window window, Player player, EctoToken plugin) {
+    public void onClick(Window window, Player player, EctoTokens plugin) {
         // do nothing
     }
 }

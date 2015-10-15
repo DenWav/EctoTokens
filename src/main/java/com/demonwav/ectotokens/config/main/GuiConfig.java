@@ -6,6 +6,7 @@ import com.demonwav.ectotokens.config.main.nav.EctoBackButtonConfig;
 import com.demonwav.ectotokens.config.main.nav.EctoCloseButtonConfig;
 import com.demonwav.ectotokens.config.main.nav.EctoLeftNavButtonConfig;
 import com.demonwav.ectotokens.config.main.nav.EctoRightNavButtonConfig;
+import com.demonwav.ectotokens.util.StringUtil;
 
 import lombok.Data;
 
@@ -20,6 +21,7 @@ public class GuiConfig implements Config {
     private EctoCloseButtonConfig closeButton;
     private int height;
     private ActionBarConfig actionBar;
+    private String priceText;
 
     @Override
     public boolean validate(Logger logger) {
@@ -29,6 +31,8 @@ public class GuiConfig implements Config {
             logger.severe("Height must be greater than 0 and less than 6.");
             result = false;
         }
+
+        priceText = StringUtil.color(priceText);
 
         result &= actionBar.validate(logger);
         return result;

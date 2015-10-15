@@ -5,7 +5,6 @@ import com.demonwav.ectotokens.gui.Window;
 
 import org.bukkit.entity.Player;
 
-// TODO: update this when extending documentation is available
 /**
  * A config that defines some window. The {@link com.demonwav.ectotokens.config.shop.MainWindowConfig MainWindowConfig}
  * defines a root window which all windows spawn from. However,
@@ -15,7 +14,8 @@ import org.bukkit.entity.Player;
  * for each window that is not an {@link com.demonwav.ectotokens.config.shop.EctoWindowConfig EctoWindowConfg}, as the
  * parser would have no way of knowing this implementation is not an EctoWindowConfig. You don't have to define a config
  * file to setup a window, but you must define a config if you want the user to be able to define your window in their
- * config. More information on how to do this will be added later.
+ * config. More information on how to do this can be found
+ * <a href="https://github.com/DemonWav/EctoTokens/blob/master/extending.md">here</a>.
  */
 public interface WindowConfig extends Config {
 

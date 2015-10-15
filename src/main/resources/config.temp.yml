@@ -123,6 +123,11 @@ gui:
       # Color of the tokens count, again, give just the hext digit.
       tokensColor: c
 
+  # When someone mouses over an item and it's price is set to display, this will be the last line of the lore
+  # showing the price that you set for the item. This can use colors. This has one variable available:
+  #   {price} - The price of the item
+  priceText: '&ePrice: {price}'
+
 # Configuration for the different commands and what they output to the user
 commands:
   # There are two help responses, one for the normal player, and one for the admins. You can modify

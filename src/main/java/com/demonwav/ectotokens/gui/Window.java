@@ -7,10 +7,10 @@ import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 
-// TODO: update this when extending documentation is available
 /**
  * This defines a window which can be opened either as the root window, or a window opened by an
- * {@link OpenWindowAction}. More information on how to do this will be added later.
+ * {@link OpenWindowAction}. More information on how to do can be found
+ * <a href="https://github.com/DemonWav/EctoTokens/blob/master/extending.md">here</a>.
  * <p>
  * The EctoInventoryHolder is a utility class to help Window operations. If the Inventory you create in
  * {@link #createWindow()} has an InventoryHolder which is an instanceof {@link EctoInventoryHolder} then the

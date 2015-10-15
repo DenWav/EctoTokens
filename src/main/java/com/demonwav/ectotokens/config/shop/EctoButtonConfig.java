@@ -1,5 +1,6 @@
 package com.demonwav.ectotokens.config.shop;
 
+import com.demonwav.ectotokens.EctoTokens;
 import com.demonwav.ectotokens.action.Action;
 import com.demonwav.ectotokens.button.EctoButton;
 import com.demonwav.ectotokens.config.ActionConfig;
@@ -13,6 +14,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +51,8 @@ public class EctoButtonConfig implements ButtonConfig {
         }
         showPrice = showPrice == null ? false : showPrice;
         if (showPrice) {
-            // TODO: implement better price view (maybe?)
-            desc.add("Price: " + StringUtil.formatTokens(price));
+            EctoTokens plugin = (EctoTokens) Bukkit.getPluginManager().getPlugin("EctoTokens");
+            desc.add(StringUtil.priceTextVar(plugin.getMainConfig().getGui().getPriceText(), price));
         }
 
         if (actions == null || actions.isEmpty()) {

@@ -8,7 +8,6 @@ import com.demonwav.ectotokens.gui.Window;
 
 import org.bukkit.entity.Player;
 
-// TODO: update when extension documentation is available
 /**
  * The basic action that a general button will run. This creates a contract with the implementing class that it:
  * <pre>
@@ -21,7 +20,8 @@ import org.bukkit.entity.Player;
  * <p>
  * To create your own actions, implement this class in your plugin. Then implement the {@link ActionConfig} class which
  * define your Action implementation. Have the user add the ActionConfig to their shop.yml file to enable the action.
- * More in-depth documentation on how this is done will be created later.
+ * More in-depth documentation on how this can be found
+ * <a href="https://github.com/DemonWav/EctoTokens/blob/master/extending.md">here</a>.
  * <p>
  * This is the preferred method of extending functionality of the GUI. However, if you need to define the button itself,
  * look {@link Button here}.

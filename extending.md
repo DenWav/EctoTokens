@@ -23,8 +23,8 @@ Once you have done that you can add the EctoTokens plugin as a dependency:
 
 ```xml
 <dependency>
-    <groupId>com.demonwav.ectotoken</groupId>
-    <artifactId>ectotoken</artifactId>
+    <groupId>com.demonwav.ectotokens</groupId>
+    <artifactId>ectotokens</artifactId>
     <version>1.0-SNAPSHOT</version>
     <scope>provided</scope>
 </dependency>
@@ -70,7 +70,7 @@ other classes which implement Config, the `validate()` method call of the first 
 children Config implementations. For our Action example, let's implement the `ActionConfig` interface:
 
 ```java
-import com.demonwav.ectotoken.config.ActionConfig;
+import com.demonwav.ectotokens.config.ActionConfig;
 
 public class SomeConfig implements ActionConfig {
     
@@ -124,6 +124,9 @@ method will cause the entire configuration to fail and the EctoTokens plugin wil
 reason to never return false, though. You should only return true if the setup meets the required specifications for
 your plugin.
 
+The `validate()` method is also kind-of like the pseduo-constructor for your Config class. This should contain "startup"
+code for your plugin to run as well, which can include re-formatting String inputs or whatever else you like.
+
 Convenience methods for the `validate()` method are in the
 [Configs](src/main/java/com/demonwav/ectotokens/config/Configs.java) class.
 
@@ -154,8 +157,8 @@ public class SomePlugin extends JavaPlugin {
 
     @Override
     final public void onEnable() {
-        EctoToken ectoToken = (EctoToken) Bukkit.getPluginManager().getPlugin("EctoToken");
-        ectoToken.registerTag("SendPhrase", SomeConfig.class);
+        EctoTokens ectoTokens = (EctoTokens) Bukkit.getPluginManager().getPlugin("EctoTokens");
+        ectoTokens.registerTag("SendPhrase", SomeConfig.class);
     }
 }
 ```
@@ -177,7 +180,7 @@ You shouldn't define them as `ArrayList` or `HashMap`, though, just leave them a
 at this example:
 
 ```java
-import com.demonwav.ectotoken.config.ActionConfig;
+import com.demonwav.ectotokens.config.ActionConfig;
 
 public class SomeConfig implements ActionConfig {
     
@@ -230,7 +233,7 @@ public class SomePlugin extends JavaPlugin {
 
     @Override
     final public void onEnable() {
-        EctoToken ectoToken = (EctoToken) Bukkit.getPluginManager().getPlugin("EctoToken");
+        EctoTokens ectoTokens = (EctoTokens) Bukkit.getPluginManager().getPlugin("EctoTokens");
         ectoToken.register(SomeConfig.class, "nums", Integer.class, EctoToken.Register.ELEMENT);
     }
 }

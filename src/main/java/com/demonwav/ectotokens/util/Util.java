@@ -20,10 +20,10 @@ public class Util {
     }
 
     public static void runTask(Runnable runnable) {
-        Bukkit.getScheduler().runTask(Bukkit.getPluginManager().getPlugin("EctoToken"), runnable);
+        Bukkit.getScheduler().runTask(Bukkit.getPluginManager().getPlugin("EctoTokens"), runnable);
     }
 
     public static void runTaskAsync(Runnable runnable) {
-        Bukkit.getScheduler().runTaskAsynchronously(Bukkit.getPluginManager().getPlugin("EctoToken"), runnable);
+        Bukkit.getScheduler().runTaskAsynchronously(Bukkit.getPluginManager().getPlugin("EctoTokens"), runnable);
     }
 }

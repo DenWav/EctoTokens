@@ -28,7 +28,6 @@ public class EctoButton extends Button {
             meta.setDisplayName(title);
             meta.setLore(desc);
             stack.setItemMeta(meta);
-
         }
         this.actions = actions;
         this.permission = permission;
