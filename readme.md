@@ -5,8 +5,7 @@ EctoTokens is an easily extendable tokens system for CraftBukkit. The tokens are
 mainly through in-game actions such as killing mobs. It can be easily extended to add more ways to receive tokens as
 well. It is heavily config-file based and creates an inventory GUI from the configuration settings so players can buy
 things. This plugin comes with various actions available out of the box, but again, actions and buttons can be extended
-and added easily to increase the versatility of this plugin. I will add documentation of how to extend this plugin
-later.
+and added easily to increase the versatility of this plugin.
 
 Compiling
 ---------
