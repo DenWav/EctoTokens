@@ -121,7 +121,7 @@ public class SomeAction extends Action {
 }
 ```
 
-This is a simple Action, when we are ran we simply simply send the phrase to the player in whatever color the player
+This is a simple Action, when we are ran we simply send the phrase to the player in whatever color the player
 set in the config. Now we have the Config and the Action defined, we need to add it to our `shop.yml`:
 
 ```yaml

@@ -239,7 +239,7 @@ public class SomePlugin extends JavaPlugin {
 The `SomeConfig.class` is the parent entry, or where this field resides. The next argument is the field name, and then
 the class of the field that should be in the List after that. The last argument differentiates between items where the
 *elements* of the field should be that type, or the *field itself* should be that type. An example of when the parser
-won't know what the type of the field itself might be when the field is an abstract class or an interface. You would
+won't know what the type of the field itself might be is when the field is an abstract class or an interface. You would
 need to use `EctoToken.Register.DEFAULT` to tell the parser to set that property as whatever class you give it. After
 we have added this to our `onEnable()` we no longer need to tell the parser what type each field is:
  
@@ -255,7 +255,7 @@ actions:
 Tutorials
 ---------
 
-View tutorials for doing certain things here:
+View tutorials for doing more specific things here:
 * [Creating an Action](create_action.md)
 * [Creating a Button](create_button.md)
 * [Creating a Window](create_window.md)

@@ -22,8 +22,8 @@ public class SomeConfig implements WindowConfig {
 
     @Override
     public boolean validate(Logger logger) {
-        if (title == null || title.trim().isEmpty()) {
-            logger.severe("title must be set");
+        if (windowTitle == null || windowTitle.trim().isEmpty()) {
+            logger.severe("windowTitle must be set");
             return false;
         }
         return true;
@@ -37,7 +37,7 @@ public class SomeConfig implements WindowConfig {
     @Override
     public Window getWindow(int height, Window parent, Player player, EctoToken plugin) {
         SomePlugin somePlugin = (SomePlugin) Bukkit.getPluginManager().getPlugin("SomePlugin");
-        return new SomeWindow(height, parent, player, plugin, title, somePlugin);
+        return new SomeWindow(height, parent, player, plugin, windowTitle, somePlugin);
     }
 }
 ```
@@ -63,12 +63,12 @@ import com.demonwav.ectotoken.config.WindowConfig;
 @Data
 public class SomeConfig implements WindowConfig {
 
-    private String title;
+    private String windowTitle;
 
     @Override
     public boolean validate(Logger logger) {
-        if (title == null || title.trim().isEmpty()) {
-            logger.severe("title must be set");
+        if (windowTitle == null || windowTitle.trim().isEmpty()) {
+            logger.severe("windowTitle must be set");
             return false;
         }
         return true;
@@ -76,25 +76,25 @@ public class SomeConfig implements WindowConfig {
 
     @Override
     public String getTitle() {
-        return title;
+        return windowTitle;
     }
 
     @Override
     public Window getWindow(int height, Window parent, Player player, EctoToken plugin) {
         SomePlugin somePlugin = (SomePlugin) Bukkit.getPluginManager().getPlugin("SomePlugin");
-        return new SomeWindow(height, parent, player, plugin, title, somePlugin);
+        return new SomeWindow(height, parent, player, plugin, windowTitle, somePlugin);
     }
 }
 ```
 
-`getTitle()` and `getWindow()` are methods defined in the `WindowConfig` interface. this is how EctoTokens transforms
+`getTitle()` and `getWindow()` are methods defined in the `WindowConfig` interface. This is how EctoTokens transforms
 this configuration setup to some Window to open. You can use whatever logic you like to define you Window implementation,
 but here we just pass along the provided values and throw in our plugin too. Here's a rundown of the arguments:
 
-* height: global height setting defined in EctoTokens' `config.yml`
-* parent: if an Action opened this Window then this has a parent Window that it will need to reopen if it needs to go "back"
-* player: the player this Window is for
-* plugin: the instance of the EctoTokens plugin
+* height: Global height setting defined in EctoTokens' `config.yml`.
+* parent: If an Action opened this Window then this has a parent Window that it will need to reopen if it needs to go "back". This may be null.
+* player: The player this Window is for.
+* plugin: The instance of the EctoTokens plugin.
 
 We have created an implementation of `Window`, but we need a `Window` if we want the window to actually open:
 
@@ -247,7 +247,7 @@ Now we have the Config and the Window defined, we need to add it to our `shop.ym
 
 ```yaml
 window: !SomeWindow
-  title: 'Hello World!'
+  windowTitle: 'Hello World!'
 ```
 
 Notice that, unlike normal, you need to tell the parser the type tag for this Window. That is because EctoTokens already 
