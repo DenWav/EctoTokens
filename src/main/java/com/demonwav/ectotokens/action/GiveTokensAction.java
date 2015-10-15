@@ -18,6 +18,6 @@ public class GiveTokensAction extends Action {
     @Override
     public void run(Window window, Player player, EctoTokens plugin) {
         TokensManager.getInstance().modifyBalance(player, config.getAmount(), "GIVE_TOKENS_ACTION");
-        window.updateActionBar();
+        window.updateInformation();
     }
 }

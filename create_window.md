@@ -218,7 +218,7 @@ public class SomeWindow implements Window {
     }
 
     @Override
-    public void updateActionBar() {
+    public void updateInformation() {
         // do nothing
     }
 }

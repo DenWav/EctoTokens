@@ -61,6 +61,13 @@ public class StringUtil {
         return s.replaceAll("\\{price\\}", formatTokens(price));
     }
 
+    public static String infoButtonTextVar(String s, String name, long balance, int cur, int tot) {
+        return s.replaceAll("\\{playername\\}", name)
+                .replaceAll("\\{tokencount\\}", formatTokens(balance))
+                .replaceAll("\\{currentpage\\}", String.valueOf(cur))
+                .replaceAll("\\{totalpages\\}", String.valueOf(tot));
+    }
+
     public static String color(String s) {
         // lol
         return s.replaceAll("&", "§").replaceAll("§§", "&");

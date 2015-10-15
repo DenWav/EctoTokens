@@ -79,6 +79,33 @@ gui:
     desc:
       -
 
+  # This button is shown at the top center part of the inventory, it only shows information
+  infoButton:
+    # Default item: diamond (264)
+    itemId: 264
+    # Default data: 0 (none)
+    # Leave this as 0 if it doesn't apply
+    # This is the "damage" or "data" value of the item
+    # That is the, the number after the :
+    itemData: 0
+    # The title is the first line of info, probably the title
+    # You have four variables you can use here:
+    #   {playername} - The name of the player
+    #   {tokencount} - The current balance of the player
+    #   {currentpage}- Current page number
+    #   {totalpages} - Total number of pages
+    title: '&eEctoTokens Store'
+    # Description of the item
+    # This can be several lines, add each line as an entry in the list
+    # Also supports color codes
+    # You have four variables you can use here:
+    #   {playername} - The name of the player
+    #   {tokencount} - The current balance of the player
+    #   {currentpage}- Current page number
+    #   {totalpages} - Total number of pages
+    desc:
+      - '&bCurrent Balance: {tokencount}'
+
   # Number of rows in the window. This will be constant for the lifetime of the plugin
   # The number of pages required for the buttons specified in the config will be determined
   # by this number. The larger this number, the fewer pages needed. It's recommend to keep

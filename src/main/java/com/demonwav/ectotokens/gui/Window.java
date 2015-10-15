@@ -155,9 +155,9 @@ public interface Window {
     List<? extends Page> getPages();
 
     /**
-     * If this Window uses the action bar to show information and has a persistent message running, update the
-     * information in that message. This is used in the default implementation to show the current balance of tokens a
-     * Player has, and this method is called after a purchase is made.
+     * If this Window has some persistent information visible on the screen, and something has changed, such as the
+     * current page, player's balance, etc, then this method needs to be called. The Window should use this method to
+     * do whatever necessary to update the information available to the player.
      */
-    void updateActionBar();
+    void updateInformation();
 }

@@ -43,7 +43,7 @@ public class GiveItemsAction extends Action {
                 quantity -= tempQuantity;
             } while (quantity > 0);
         }
-        window.updateActionBar();
+        window.updateInformation();
     }
 
     @Override

@@ -36,7 +36,7 @@ public class RepairItemsAction extends Action {
                 }
             }
         }
-        window.updateActionBar();
+        window.updateInformation();
     }
 
     @Override

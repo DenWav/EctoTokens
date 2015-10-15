@@ -92,7 +92,7 @@ public class EctoWindow implements Window {
     }
 
     @Override
-    public void updateActionBar() {
+    public void updateInformation() {
         final UUID uuid = player.getUniqueId();
         Util.runTaskAsync(new Runnable() {
             @Override
@@ -109,6 +109,7 @@ public class EctoWindow implements Window {
                 });
             }
         });
+        setNavButtons();
     }
 
     @Override
@@ -184,11 +185,46 @@ public class EctoWindow implements Window {
     }
 
     private void setNavButtons() {
-        inv.setItem(0, plugin.getMainConfig().getGui().getBackButton().getButton().getItem());
-        inv.setItem(8, plugin.getMainConfig().getGui().getCloseButton().getButton().getItem());
-        int row = h / 2;
-        inv.setItem(row * 9, plugin.getMainConfig().getGui().getLeftNavButton().getButton().getItem());
-        inv.setItem(row * 9 + 8, plugin.getMainConfig().getGui().getRightNavButton().getButton().getItem());
+        final UUID uuid = player.getUniqueId();
+        final String name = player.getDisplayName();
+        Util.runTaskAsync(new Runnable() {
+            @Override
+            public void run() {
+                final long balance = TokensManager.getInstance().getBalance(uuid);
+
+                Util.runTask(new Runnable() {
+                    @Override
+                    public void run() {
+                        // update infos on info button
+                        plugin.getMainConfig().getGui().getInfoButton().setActualTitle(StringUtil.infoButtonTextVar(
+                            plugin.getMainConfig().getGui().getInfoButton().getTitle(),
+                            name,
+                            balance,
+                            getCurrentPage(),
+                            getNumPages()
+                        ));
+                        List<String> desc = new ArrayList<>();
+                        for (String s : plugin.getMainConfig().getGui().getInfoButton().getDesc()) {
+                            desc.add(StringUtil.infoButtonTextVar(
+                                s,
+                                name,
+                                balance,
+                                getCurrentPage(),
+                                getNumPages()
+                            ));
+                        }
+                        plugin.getMainConfig().getGui().getInfoButton().setActualDesc(desc);
+
+                        inv.setItem(4, plugin.getMainConfig().getGui().getInfoButton().getButton().getItem());
+                        inv.setItem(0, plugin.getMainConfig().getGui().getBackButton().getButton().getItem());
+                        inv.setItem(8, plugin.getMainConfig().getGui().getCloseButton().getButton().getItem());
+                        int row = h / 2;
+                        inv.setItem(row * 9, plugin.getMainConfig().getGui().getLeftNavButton().getButton().getItem());
+                        inv.setItem(row * 9 + 8, plugin.getMainConfig().getGui().getRightNavButton().getButton().getItem());
+                    }
+                });
+            }
+        });
     }
 
     @Override
@@ -213,7 +249,7 @@ public class EctoWindow implements Window {
         else if (slot == rightSlot)
             plugin.getMainConfig().getGui().getRightNavButton().getButton().onClick(this, player, plugin);
         // only pass the click to the page for non-gui buttons
-        else
+        else if (slot != 4)
             if (type == ClickType.SHIFT_LEFT)
                 getPage().click(slot, player, this, plugin);
             else

@@ -28,7 +28,7 @@ public class EnterLotteryAction extends Action {
         Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
             @Override
             public void run() {
-                window.updateActionBar();
+                window.updateInformation();
             }
         }, 10);
     }

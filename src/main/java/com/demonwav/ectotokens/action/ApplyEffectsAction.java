@@ -31,6 +31,6 @@ public class ApplyEffectsAction extends Action {
             }
             player.addPotionEffect(new PotionEffect(type, effect.getDuration() + duration, effect.getAmplifier(), effect.getAmbient(), effect.getParticles()));
         }
-        window.updateActionBar();
+        window.updateInformation();
     }
 }
