@@ -28,6 +28,11 @@ you do this, because before the compilation stage several classes are generated 
 
 When that is finished, look in the `target/` folder, and it will have the compiled .jar file.
 
+Developers
+----------
+
+[Information on how to extend EctoTokens can be found here.](extending.md)
+
 Further Info
 ------------
 
