@@ -1,7 +1,7 @@
 EctoTokens
 ==========
 
-EctoTokens is an easily extendable tokens system for Spigot. The tokens are received through a variety of manners,
+EctoTokens is an easily extendable tokens system for CraftBukkit. The tokens are received through a variety of manners,
 mainly through in-game actions such as killing mobs. It can be easily extended to add more ways to receive tokens as
 well. It is heavily config-file based and creates an inventory GUI from the configuration settings so players can buy
 things. This plugin comes with various actions available out of the box, but again, actions and buttons can be extended
