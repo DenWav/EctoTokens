@@ -68,6 +68,7 @@ public class EctoWindow implements Window {
     @Override
     public void createWindow() {
         inv = Bukkit.createInventory(new EctoInventoryHolder(this), 9 * h, getTitle());
+        ((EctoInventoryHolder) inv.getHolder()).setInventory(inv);
         // current page is 0 at start, always
         setNavButtons();
         pages.get(currentPage).applyPage(inv);

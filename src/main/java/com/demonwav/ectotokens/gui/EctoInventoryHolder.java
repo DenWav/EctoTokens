@@ -6,6 +6,7 @@ import org.bukkit.inventory.InventoryHolder;
 public class EctoInventoryHolder implements InventoryHolder {
 
     private final Window window;
+    private Inventory inventory;
 
     public EctoInventoryHolder(Window window) {
         this.window = window;
@@ -13,7 +14,11 @@ public class EctoInventoryHolder implements InventoryHolder {
 
     @Override
     public Inventory getInventory() {
-        return null;
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 
     public Window getWindow() {
